@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="Kanban.DesktopClient.Views.AuthorizationPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Border Background="#EEE">
+            <Border Background="#393E46" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="20 10 20 20">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120"></ColumnDefinition>
+                        <ColumnDefinition Width="300"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock Foreground="#FF00ADB5" VerticalAlignment="Top" Margin="0,19,0,0" FontSize="16">Login</TextBlock>
+                    <TextBlock Foreground="#FF00ADB5" Grid.Row="1" VerticalAlignment="Top" Margin="0,19,0,0" FontSize="16">Password</TextBlock>
+                    <TextBox Foreground="#FFABABAB" BorderBrush="#FFAFAFAF" CaretBrush="#FF00ADB5" SelectionBrush="#FF00ADB5" SelectionTextBrush="#FF00ADB5" materialDesign:HintAssist.Hint="Login" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="1" FontSize="16" Text="{Binding Login}"></TextBox>
+                    <TextBox Foreground="#FFABABAB" BorderBrush="#FFAFAFAF" CaretBrush="#FF00ADB5" SelectionBrush="#FF00ADB5" SelectionTextBrush="#FF00ADB5" materialDesign:HintAssist.Hint="Password" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="1" Grid.Row="1" FontSize="16" Text="{Binding Password}"></TextBox>
+                    <Border Grid.Row="2" Grid.ColumnSpan="2" Padding="0 20 0 0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Button Background="#00ADB5" BorderBrush="#FF008A90" Margin="0 0 5 0" Command="{Binding SignUp}">Sign up</Button>
+                            <Button Background="#008A90" Grid.Column="1" BorderBrush="#FF00ADB5" Margin="5 0 0 0" Command="{Binding SignIn}">Sign in</Button>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Border>
+        </Border>
+    </Grid>
+</UserControl>

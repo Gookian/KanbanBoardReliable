@@ -1,0 +1,60 @@
+﻿<UserControl x:Class="Kanban.DesktopClient.Views.HomePage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Border Background="#393E46">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="80"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="20"></RowDefinition>
+                    <RowDefinition Height="20"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Border Background="#00ADB5">
+                    <Border Background="#C4C4C4" Width="70" Height="70" CornerRadius="40" Margin="65,33,65,-23"></Border>
+                </Border>
+                <TextBlock Grid.Row="2" Foreground="#FFF" HorizontalAlignment="Center">Ivanov Ivan</TextBlock>
+                <TextBlock Grid.Row="3" Foreground="#C5C4C4" HorizontalAlignment="Center">Ivan.I@mail.ru</TextBlock>
+                <Border Grid.Row="4">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <TextBlock Foreground="#FFF" FontWeight="Bold" Margin="10 0">Меню</TextBlock>
+                        <StackPanel Grid.Row="1">
+                            <!--<Border Background="#00ADB5" Height="40" Margin="10 10 10 0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="4"></ColumnDefinition>
+                                        <ColumnDefinition Width="46"/>
+                                        <ColumnDefinition></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="2" Foreground="#FFF" FontWeight="Bold" FontSize="16" VerticalAlignment="Center">Главная</TextBlock>
+                                </Grid>
+                            </Border>-->
+                            <Button Margin="10 5 10 0" Background="#00ADB5" BorderBrush="#FF00ADB5" Command="{Binding Home}">Главная</Button>
+                            <Button Margin="10 5 10 0" Background="#00ADB5" BorderBrush="#FF00ADB5" Command="{Binding Boards}">Доски</Button>
+                            <Button Margin="10 5 10 0" Background="#00ADB5" BorderBrush="#FF00ADB5" Command="{Binding Reference}">Справка</Button>
+                            <Button Margin="10 5 10 0" Background="#00ADB5" BorderBrush="#FF00ADB5" Command="{Binding Exit}">Выйти</Button>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+        <Border Grid.Column="1" x:Name="HomeFrame" Background="#EEE">
+        </Border>
+    </Grid>
+</UserControl>
