@@ -24,6 +24,7 @@ namespace Kanban.ConsoleClient
             client = new ClientWebSocket();
             await client.ConnectAsync(new Uri($"ws://localhost:5000/{_api}"), CancellationToken.None);
             messageService = new MessageService(client);
+            ServerAPI.MessageService = messageService;
 
             Console.WriteLine("Connected to server");
 
@@ -31,16 +32,54 @@ namespace Kanban.ConsoleClient
 
             while (true)
             {
-                var line = Console.ReadLine();
+                var command = Console.ReadLine();
 
-                Request request = new Request
+                var name = "";
+                var password = "";
+                var result = new Response();
+
+                switch (command)
                 {
-                    Method = "GET",
-                    Header = line,
-                    Body = null
+                    case "Post /user":
+                        Console.Write("Введите имя: ");
+                        name = Console.ReadLine();
+                        Console.Write("Введите пароль: ");
+                        password = Console.ReadLine();
+                        result = ServerAPI.PostUser(new User()
+                        {
+                            Id = new Guid(),
+                            Name = name,
+                            Password = password
+                        });
+                        Console.WriteLine(result.Code);
+                        Console.WriteLine(result.Header);
+                        Console.WriteLine(result.Body);
+                        break;
+                    case "Get /users":
+                        result = ServerAPI.GetUsers();
+                        Console.WriteLine(result.Code);
+                        Console.WriteLine(result.Header);
+                        Console.WriteLine(result.Body);
+                        break;
+                    case "Get /boards":
+                        result = ServerAPI.GetUsers();
+                        Console.WriteLine(result.Code);
+                        Console.WriteLine(result.Header);
+                        Console.WriteLine(result.Body);
+                        break;
+                    case "Get /columns":
+                        result = ServerAPI.GetUsers();
+                        Console.WriteLine(result.Code);
+                        Console.WriteLine(result.Header);
+                        Console.WriteLine(result.Body);
+                        break;
+                    case "Get /cards":
+                        result = ServerAPI.GetUsers();
+                        Console.WriteLine(result.Code);
+                        Console.WriteLine(result.Header);
+                        Console.WriteLine(result.Body);
+                        break;
                 };
-
-                messageService.Send(request);
             }
         }
 
@@ -49,62 +88,3 @@ namespace Kanban.ConsoleClient
         }
     }
 }
-
-/*User user = new User() {
-    Id = new Guid(),
-    Name = "Gers",
-    Password = "fFgSmH"
-};*/
-
-/*Card card1 = new Card()
-{
-    Id = new Guid(),
-    Title = "Сходить в магазин",
-    Description = "Купить молока и сахара",
-    StoryPoint = 7,
-    Date = DateTime.Now
-};
-
-Card card2 = new Card()
-{
-    Id = new Guid(),
-    Title = "Помыть кошку",
-    Description = "Искупать кошку",
-    StoryPoint = 7,
-    Date = DateTime.Now
-};
-
-Column column1 = new Column()
-{
-    Id = new Guid(),
-    Name = "Backlog",
-    Card = { card1 }
-};
-
-Column column2 = new Column()
-{
-    Id = new Guid(),
-    Name = "To Do",
-    Card = { card1, card2 }
-};
-
-Column column3 = new Column()
-{
-    Id = new Guid(),
-    Name = "In Process",
-    Card = { card2 }
-};
-
-Column column4 = new Column()
-{
-    Id = new Guid(),
-    Name = "Done",
-    Card = { card2, card1 }
-};
-
-Board board = new Board()
-{
-    Id = new Guid(),
-    Name = line,
-    Column = { column1, column2, column3, column4 }
-};*/
