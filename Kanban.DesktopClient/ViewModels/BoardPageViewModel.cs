@@ -2,11 +2,11 @@
 
 namespace Kanban.DesktopClient.ViewModels
 {
-    public class BorderPageViewModel
+    public class BoardPageViewModel
     {
         public DelegateCommand Board { get; set; }
 
-        public BorderPageViewModel()
+        public BoardPageViewModel()
         {
             Board = new DelegateCommand(Border_Click);
         }

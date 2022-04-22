@@ -22,20 +22,20 @@
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
-                    <TextBlock Foreground="#FF00ADB5" VerticalAlignment="Top" Margin="0,19,0,0" FontSize="16">Login</TextBlock>
-                    <TextBlock Foreground="#FF00ADB5" Grid.Row="1" VerticalAlignment="Top" Margin="0,19,0,0" FontSize="16">Password</TextBlock>
-                    <TextBlock Foreground="#FF00ADB5" Grid.Row="2" VerticalAlignment="Top" Margin="0,19,0,0" FontSize="16">Re-enter password</TextBlock>
-                    <TextBox Foreground="#FFABABAB" BorderBrush="#FFAFAFAF" CaretBrush="#FF00ADB5" SelectionBrush="#FF00ADB5" SelectionTextBrush="#FF00ADB5" materialDesign:HintAssist.Hint="Login" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="1" FontSize="16" Text="{Binding Login}"></TextBox>
-                    <TextBox Foreground="#FFABABAB" BorderBrush="#FFAFAFAF" CaretBrush="#FF00ADB5" SelectionBrush="#FF00ADB5" SelectionTextBrush="#FF00ADB5" materialDesign:HintAssist.Hint="Password" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="1" Grid.Row="1" FontSize="16" Text="{Binding Password}"></TextBox>
-                    <TextBox Foreground="#FFABABAB" BorderBrush="#FFAFAFAF" CaretBrush="#FF00ADB5" SelectionBrush="#FF00ADB5" SelectionTextBrush="#FF00ADB5" materialDesign:HintAssist.Hint="Re-enter password" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="1" Grid.Row="2" FontSize="16" Text="{Binding RePassword}"></TextBox>
+                    <TextBlock Foreground="#FF00C2FF" VerticalAlignment="Top" Margin="0,19,0,0" FontSize="16">Login</TextBlock>
+                    <TextBlock Foreground="#FF00C2FF" Grid.Row="1" VerticalAlignment="Top" Margin="0,19,0,0" FontSize="16">Password</TextBlock>
+                    <TextBlock Foreground="#FF00C2FF" Grid.Row="2" VerticalAlignment="Top" Margin="0,19,0,0" FontSize="16">Re-enter password</TextBlock>
+                    <TextBox Foreground="#FFABABAB" BorderBrush="#FF00C2FF" CaretBrush="#FF00ADB5" SelectionBrush="#FF00ADB5" SelectionTextBrush="#FF00ADB5" materialDesign:HintAssist.Hint="Login" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="1" FontSize="16" Text="{Binding Login}"></TextBox>
+                    <TextBox Foreground="#FFABABAB" BorderBrush="#FF00C2FF" CaretBrush="#FF00ADB5" SelectionBrush="#FF00ADB5" SelectionTextBrush="#FF00ADB5" materialDesign:HintAssist.Hint="Password" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="1" Grid.Row="1" FontSize="16" Text="{Binding Password}"></TextBox>
+                    <TextBox Foreground="#FFABABAB" BorderBrush="#FF00C2FF" CaretBrush="#FF00ADB5" SelectionBrush="#FF00ADB5" SelectionTextBrush="#FF00ADB5" materialDesign:HintAssist.Hint="Re-enter password" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="1" Grid.Row="2" FontSize="16" Text="{Binding RePassword}"></TextBox>
                     <Border Grid.Row="3" Grid.ColumnSpan="2" Padding="0 20 0 0">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <Button Background="#008A90" BorderBrush="#FF008A90" Margin="0 0 5 0" Command="{Binding SignUp}">Sign up</Button>
-                            <Button Background="#00ADB5" Grid.Column="1" BorderBrush="#FF00ADB5" Margin="5 0 0 0" Command="{Binding SignIn}">Sign in</Button>
+                            <Button Background="#00C2FF" BorderBrush="#00C2FF" Margin="0 0 5 0" Command="{Binding SignUp}">Sign up</Button>
+                            <Button Background="#009BCC" Grid.Column="1" BorderBrush="#009BCC" Margin="5 0 0 0" Command="{Binding SignIn}" Cursor="Hand">Log in</Button>
                         </Grid>
                     </Border>
                 </Grid>
