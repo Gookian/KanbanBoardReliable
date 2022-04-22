@@ -24,7 +24,7 @@
                     <TextBlock Foreground="#FF00C2FF" VerticalAlignment="Top" Margin="0,19,0,0" FontSize="16">Login</TextBlock>
                     <TextBlock Foreground="#FF00C2FF" Grid.Row="1" VerticalAlignment="Top" Margin="0,19,0,0" FontSize="16">Password</TextBlock>
                     <TextBox Foreground="#FFABABAB" BorderBrush="#FF00C2FF" CaretBrush="#FF00ADB5" SelectionBrush="#FF00ADB5" SelectionTextBrush="#FF00ADB5" materialDesign:HintAssist.Hint="Login" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="1" FontSize="16" Text="{Binding Login}"></TextBox>
-                    <TextBox Foreground="#FFABABAB" BorderBrush="#FF00C2FF" CaretBrush="#FF00ADB5" SelectionBrush="#FF00ADB5" SelectionTextBrush="#FF00ADB5" materialDesign:HintAssist.Hint="Password" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="1" Grid.Row="1" FontSize="16" Text="{Binding Password}"></TextBox>
+                    <TextBox Foreground="#FFABABAB" BorderBrush="#FF00C2FF" CaretBrush="#FF00ADB5" SelectionBrush="#FF00ADB5" SelectionTextBrush="#FF00ADB5" materialDesign:HintAssist.Hint="Password" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="1" Grid.Row="1" FontSize="16" Text="{Binding Password}" Cursor="Arrow"></TextBox>
                     <Border Grid.Row="2" Grid.ColumnSpan="2" Padding="0 20 0 0">
                         <Grid>
                             <Grid.ColumnDefinitions>
