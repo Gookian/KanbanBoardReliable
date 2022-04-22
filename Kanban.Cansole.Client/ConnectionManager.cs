@@ -1,18 +1,18 @@
-﻿using System.Text;
-using Core;
+﻿using Core;
 
 namespace Kanban.ConsoleClient
 {
-    using Newtonsoft.Json;
     using System;
     using System.Net.WebSockets;
     using System.Threading;
     using System.Threading.Tasks;
+    using Kanban.CansoleClient.RestAPI;
 
     class ConnectionManager
     {
         private readonly string _api;
         private ClientWebSocket client;
+        private MessageService messageService;
 
         public ConnectionManager(string api)
         {
@@ -23,61 +23,68 @@ namespace Kanban.ConsoleClient
         {
             client = new ClientWebSocket();
             await client.ConnectAsync(new Uri($"ws://localhost:5000/{_api}"), CancellationToken.None);
+            messageService = new MessageService(client);
+            ServerAPI.MessageService = messageService;
+
             Console.WriteLine("Connected to server");
 
-            Listener();
+            messageService.ResponseAsync();
 
             while (true)
             {
-                var line = Console.ReadLine();
-                //Guid id = new Guid(line);
+                var command = Console.ReadLine();
 
-                User user = new User() {
-                    Id = new Guid(),
-                    Name = "Ivan",
-                    Password = "QqqEee"
-                };
+                var name = "";
+                var password = "";
+                var result = new Response();
 
-                Request request = new Request
+                switch (command)
                 {
-                    Method = "POST",
-                    Header = "User",
-                    Body = user
+                    case "Post /user":
+                        Console.Write("Введите имя: ");
+                        name = Console.ReadLine();
+                        Console.Write("Введите пароль: ");
+                        password = Console.ReadLine();
+                        result = ServerAPI.PostUser(new User()
+                        {
+                            Id = new Guid(),
+                            Name = name,
+                            Password = password
+                        });
+                        Console.WriteLine(result.Code);
+                        Console.WriteLine(result.Header);
+                        Console.WriteLine(result.Body);
+                        break;
+                    case "Get /users":
+                        result = ServerAPI.GetUsers();
+                        Console.WriteLine(result.Code);
+                        Console.WriteLine(result.Header);
+                        Console.WriteLine(result.Body);
+                        break;
+                    case "Get /boards":
+                        result = ServerAPI.GetUsers();
+                        Console.WriteLine(result.Code);
+                        Console.WriteLine(result.Header);
+                        Console.WriteLine(result.Body);
+                        break;
+                    case "Get /columns":
+                        result = ServerAPI.GetUsers();
+                        Console.WriteLine(result.Code);
+                        Console.WriteLine(result.Header);
+                        Console.WriteLine(result.Body);
+                        break;
+                    case "Get /cards":
+                        result = ServerAPI.GetUsers();
+                        Console.WriteLine(result.Code);
+                        Console.WriteLine(result.Header);
+                        Console.WriteLine(result.Body);
+                        break;
                 };
-
-                SendMessage(request);
-                Listener();
             }
         }
 
-        public async void Listener()
+        ~ConnectionManager()
         {
-            while (this is not null)
-            {
-                var result = await ReciveAsync();
-                //var user = JsonConvert.DeserializeObject<User>(result.Body.ToString());
-
-                Console.WriteLine(result.Code);
-                Console.WriteLine(result.Header);
-                Console.WriteLine(result.Body.ToString());
-            }
-        }
-
-        public void SendMessage(Request request)
-        {
-            var jsonMessage = JsonConvert.SerializeObject(request);
-            var bytes = Encoding.UTF8.GetBytes(jsonMessage);
-
-            client.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, CancellationToken.None);
-        }
-
-        public async Task<Response> ReciveAsync()
-        {
-            var buffer = new byte[1024 * 4];
-            var result = await client.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-            var message = Encoding.UTF8.GetString(buffer);
-
-            return JsonConvert.DeserializeObject<Response>(message);
         }
     }
 }

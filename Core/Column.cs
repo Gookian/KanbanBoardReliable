@@ -9,6 +9,6 @@ namespace Core
 
         public string Name { get; set; }
 
-        public List<Card> Card { get; set; }
+        public virtual List<Card> Card { get; set; } = new List<Card>();
     }
 }

@@ -11,7 +11,7 @@ namespace Core
 
         public string Description { get; set; }
 
-        public string StoryPoint { get; set; }
+        public int StoryPoint { get; set; }
 
         public DateTime Date { get; set; }
     }
