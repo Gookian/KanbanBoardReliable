@@ -13,7 +13,7 @@
             <ColumnDefinition Width="200"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Border Background="#393E46">
+        <Border Background="#00C2FF">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="80"></RowDefinition>
@@ -22,11 +22,17 @@
                     <RowDefinition Height="20"></RowDefinition>
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
-                <Border Background="#00ADB5">
-                    <Border Background="#C4C4C4" Width="70" Height="70" CornerRadius="40" Margin="65,33,65,-23"></Border>
+                <Border Background="#009BCC">
+                    <Border Background="#C4C4C4" Width="70" Height="70" CornerRadius="40" Margin="65,33,65,-23">
+                        <Border CornerRadius="40" Margin="2">
+                            <Border.Background>
+                                <ImageBrush ImageSource="/Views/AvatarNull.jpg"/>
+                            </Border.Background>
+                        </Border>
+                    </Border>
                 </Border>
-                <TextBlock Grid.Row="2" Foreground="#FFF" HorizontalAlignment="Center">Ivanov Ivan</TextBlock>
-                <TextBlock Grid.Row="3" Foreground="#C5C4C4" HorizontalAlignment="Center">Ivan.I@mail.ru</TextBlock>
+                <TextBlock Grid.Row="2" Foreground="White" HorizontalAlignment="Center">Ivanov Ivan</TextBlock>
+                <TextBlock Grid.Row="3" Foreground="#FF616161" HorizontalAlignment="Center">Ivan.I@mail.ru</TextBlock>
                 <Border Grid.Row="4">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -45,10 +51,10 @@
                                     <TextBlock Grid.Column="2" Foreground="#FFF" FontWeight="Bold" FontSize="16" VerticalAlignment="Center">Главная</TextBlock>
                                 </Grid>
                             </Border>-->
-                            <Button Margin="10 5 10 0" Background="#00ADB5" BorderBrush="#FF00ADB5" Command="{Binding Home}">Главная</Button>
-                            <Button Margin="10 5 10 0" Background="#00ADB5" BorderBrush="#FF00ADB5" Command="{Binding Boards}">Доски</Button>
-                            <Button Margin="10 5 10 0" Background="#00ADB5" BorderBrush="#FF00ADB5" Command="{Binding Reference}">Справка</Button>
-                            <Button Margin="10 5 10 0" Background="#00ADB5" BorderBrush="#FF00ADB5" Command="{Binding Exit}">Выйти</Button>
+                            <Button Margin="10 5 10 0" Background="#FF009BCC" BorderBrush="#FF009BCC" Command="{Binding Home}">Главная</Button>
+                            <Button Margin="10 5 10 0" Background="#FF009BCC" BorderBrush="#FF009BCC" Command="{Binding Boards}">Доски</Button>
+                            <Button Margin="10 5 10 0" Background="#FF009BCC" BorderBrush="#FF009BCC" Command="{Binding Reference}">Справка</Button>
+                            <Button Margin="10 5 10 0" Background="#FF009BCC" BorderBrush="#FF009BCC" Command="{Binding Exit}">Выйти</Button>
                         </StackPanel>
                     </Grid>
                 </Border>

@@ -18,9 +18,9 @@ namespace Kanban.DesktopClient.Views
     /// <summary>
     /// Логика взаимодействия для BorderPage.xaml
     /// </summary>
-    public partial class BorderPage : UserControl
+    public partial class BoardPage : UserControl
     {
-        public BorderPage()
+        public BoardPage()
         {
             InitializeComponent();
         }
