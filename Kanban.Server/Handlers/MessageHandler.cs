@@ -28,6 +28,8 @@ namespace Kanban.Server.Handlers
                 Name = $"User{_connections.Count}"
             };
 
+            ConsoleLogger.Log(new Info(), $"User {user.Id} / {user.Name} Connected");
+
             _connections.TryAdd(user, socket);
         }
 

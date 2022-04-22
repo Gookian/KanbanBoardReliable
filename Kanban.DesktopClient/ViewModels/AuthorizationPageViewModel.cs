@@ -1,4 +1,9 @@
-﻿using Prism.Commands;
+﻿using Core;
+using Kanban.DesktopClient.RestAPI;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using Prism.Commands;
+using System.Collections.Generic;
 
 namespace Kanban.DesktopClient.ViewModels
 {
@@ -18,9 +23,19 @@ namespace Kanban.DesktopClient.ViewModels
             SignUp = new DelegateCommand(SignUp_Click);
         }
 
-        private void SignIn_Click()
+        private async void SignIn_Click()
         {
-            BindingContext.MainFrame.Child = BindingContext.HomePage;
+            var response = await ServerAPI.GetUsers();
+
+            List<User> users = JsonConvert.DeserializeObject<List<User>>(response.Body.ToString());
+
+            foreach (var user in users)
+            {
+                if (user.Name == Login && user.Password == Password)
+                {
+                    BindingContext.MainFrame.Child = BindingContext.HomePage;
+                }
+            }
         }
 
         private void SignUp_Click()

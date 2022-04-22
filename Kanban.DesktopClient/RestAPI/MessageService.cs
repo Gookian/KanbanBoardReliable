@@ -1,29 +1,26 @@
 ﻿using Core;
 using Newtonsoft.Json;
+using System;
 using System.Net.WebSockets;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace Kanban.CansoleClient.RestAPI
+namespace Kanban.DesktopClient.RestAPI
 {
     public class MessageService
     {
         public static ClientWebSocket? client;
-
-        private Response response;
 
         public MessageService(ClientWebSocket clientWebSocket)
         {
             client = clientWebSocket;
         }
 
-        public Response Send(Request request)
+        public async Task<Response> Send(Request request)
         {
             SendMessage(request);
-            ResponseAsync();
-
-            Thread.Sleep(1000);
-
-            return response;
+            return await ResponseAsync();
         }
 
         public void SendMessage(Request request)
@@ -34,9 +31,9 @@ namespace Kanban.CansoleClient.RestAPI
             client?.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, CancellationToken.None);
         }
 
-        public async void ResponseAsync()
+        public async Task<Response> ResponseAsync()
         {
-            response = await ReciveAsync();
+            return await ReciveAsync();
         }
 
         public async Task<Response> ReciveAsync()

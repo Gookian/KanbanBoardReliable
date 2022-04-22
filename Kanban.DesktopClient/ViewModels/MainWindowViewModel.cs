@@ -11,6 +11,9 @@ namespace Kanban.DesktopClient.ViewModels
     {
         public MainWindowViewModel()
         {
+            string api = "message";
+            ConnectionManager connectionManager = new ConnectionManager(api);
+            connectionManager.StartConnection();
         }
     }
 }
