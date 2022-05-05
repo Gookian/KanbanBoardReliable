@@ -5,6 +5,8 @@ namespace Kanban.DesktopClient.ViewModels
 {
     public class HomePageViewModel
     {
+        public string Login { get; set; }
+
         public DelegateCommand Home { get; set; }
 
         public DelegateCommand Boards { get; set; }
@@ -28,7 +30,7 @@ namespace Kanban.DesktopClient.ViewModels
 
         private void Boards_Click()
         {
-            BindingContext.HomeFrame.Child = BindingContext.BorderPage;
+            BindingContext.HomeFrame.Child = BindingContext.BoardPage;
         }
 
         private void Reference_Click()

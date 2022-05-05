@@ -1,47 +1,52 @@
-﻿using System.Collections.Concurrent;
+﻿using Core;
+using System.Collections.Concurrent;
 using System.Net.WebSockets;
 
 namespace Kanban.Server.SocketsManager
 {
     public class ConnectionManager
     {
-        private ConcurrentDictionary<Guid, WebSocket> _connections = new ConcurrentDictionary<Guid, WebSocket>();
+        private ConcurrentDictionary<Token, WebSocket> _connections = new ConcurrentDictionary<Token, WebSocket>();
 
-        public WebSocket GetSocketById(Guid id)
+        public WebSocket GetSocketByToken(Token token)
         {
-            return _connections.FirstOrDefault(x => x.Key == id).Value;
+            return _connections.FirstOrDefault(x => x.Key == token).Value;
         }
 
-        public ConcurrentDictionary<Guid, WebSocket> GetAllConnections()
+        public ConcurrentDictionary<Token, WebSocket> GetAllConnections()
         {
             return _connections;
         }
 
-        public Guid GetId(WebSocket socket)
+        public Token GetToken(WebSocket socket)
         {
             return _connections.FirstOrDefault(x => x.Value == socket).Key;
         }
 
-        public async void RemoveConnection(Guid id)
+        public async void RemoveConnection(Token token)
         {
-            _connections.TryRemove(id, out var socket);
+            _connections.TryRemove(token, out var socket);
             await socket.CloseAsync(WebSocketCloseStatus.NormalClosure, $"Connection closed", CancellationToken.None);
         }
 
-        public async Task RemoveSocketAsync(Guid id)
+        public async Task RemoveSocketAsync(Token token)
         {
-            _connections.TryRemove(id, out var socket);
+            _connections.TryRemove(token, out var socket);
             await socket.CloseAsync(WebSocketCloseStatus.NormalClosure, $"Connection closed", CancellationToken.None);
         }
 
         public void AddSocket(WebSocket socket)
         {
-            _connections.TryAdd(GetConnectionId(), socket);
+            _connections.TryAdd(GetConnectionToken(), socket);
         }
 
-        private Guid GetConnectionId()
+        private Token GetConnectionToken()
         {
-            return Guid.NewGuid();
+            return new Token
+            {
+                Id = Guid.NewGuid(),
+                Lifetime = new DateTime()
+            };
         }
     }
 }

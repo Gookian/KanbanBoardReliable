@@ -5,6 +5,8 @@ namespace Kanban.Server.DAL
 {
     public class Context : DbContext
     {
+        public DbSet<Token> Tokens { get; set; }
+
         public DbSet<Board> Boards { get; set; }
 
         public DbSet<Column> Columns { get; set; }

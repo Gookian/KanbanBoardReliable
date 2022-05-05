@@ -27,11 +27,14 @@ namespace Kanban.Server.DAL
             return db.Users;
         }
 
-        public static User GetUserById(Guid id)
+        public static User GetUserByNameAndPassword(string name, string password)
         {
-            var result = db.Users.Where(x => x.Id == id).First();
+            return db.Users.Where(x => x.Name == name && x.Password == password).FirstOrDefault();
+        }
 
-            return result;
+        public static User GetUserByName(string name)
+        {
+            return db.Users.Where(x => x.Name == name).FirstOrDefault();
         }
 
         public static void Add<T>(T element)

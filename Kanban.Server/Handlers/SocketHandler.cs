@@ -5,7 +5,7 @@
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
-
+    using Core;
     using SocketsManager;
 
     public abstract class SocketHandler
@@ -24,7 +24,7 @@
 
         public virtual async Task OnDisconnected(WebSocket socket)
         {
-            await ConnectionManager.RemoveSocketAsync(ConnectionManager.GetId(socket));
+            await ConnectionManager.RemoveSocketAsync(ConnectionManager.GetToken(socket));
         }
 
         public async Task SendMessage(WebSocket socket, string message)
@@ -35,9 +35,9 @@
                 WebSocketMessageType.Text, true, CancellationToken.None);
         }
 
-        public async Task SendMessage(Guid id, string message)
+        public async Task SendMessage(Token token, string message)
         {
-            await SendMessage(ConnectionManager.GetSocketById(id), message);
+            await SendMessage(ConnectionManager.GetSocketByToken(token), message);
         }
 
         public async Task SendMessageToAll(string message)

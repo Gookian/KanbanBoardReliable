@@ -6,7 +6,7 @@ namespace Kanban.CansoleClient.RestAPI
     {
         public static MessageService? MessageService { get; set; }
 
-        public static Response PostUser(User user)
+        /*public static Response PostUser(User user)
         {
             Request request = new Request()
             {
@@ -100,6 +100,6 @@ namespace Kanban.CansoleClient.RestAPI
             };
 
             return MessageService.Send(request);
-        }
+        }*/
     }
 }
