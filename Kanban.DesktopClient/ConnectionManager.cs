@@ -8,11 +8,11 @@ namespace Kanban.DesktopClient
     using System.Threading.Tasks;
     using Kanban.DesktopClient.RestAPI;
 
-    class ConnectionManager
+    public class ConnectionManager
     {
         private readonly string _api;
         private ClientWebSocket client;
-        private MessageService messageService;
+        public MessageService messageService;
 
         public ConnectionManager(string api)
         {

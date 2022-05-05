@@ -25,16 +25,18 @@ namespace Kanban.DesktopClient.ViewModels
 
         private async void SignIn_Click()
         {
-            var response = await ServerAPI.GetUsers();
-
-            List<User> users = JsonConvert.DeserializeObject<List<User>>(response.Body.ToString());
-
-            foreach (var user in users)
+            var user = new User
             {
-                if (user.Name == Login && user.Password == Password)
-                {
-                    BindingContext.MainFrame.Child = BindingContext.HomePage;
-                }
+                Id = new System.Guid(),
+                Name = Login,
+                Password = Password
+            };
+
+            var response = await ServerAPI.GetAuthentication(user);
+
+            if (response.Code == 200)
+            {
+                BindingContext.MainFrame.Child = BindingContext.HomePage;
             }
         }
 

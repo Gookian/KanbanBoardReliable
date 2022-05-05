@@ -12,6 +12,9 @@ namespace Kanban.DesktopClient.RestAPI
     {
         public static ClientWebSocket? client;
 
+        public delegate void ResponseHandler(Response response);
+        public event ResponseHandler OnResponse;
+
         public MessageService(ClientWebSocket clientWebSocket)
         {
             client = clientWebSocket;
@@ -23,17 +26,19 @@ namespace Kanban.DesktopClient.RestAPI
             return await ResponseAsync();
         }
 
-        public void SendMessage(Request request)
+        public async void SendMessage(Request request)
         {
             var jsonMessage = JsonConvert.SerializeObject(request);
             var bytes = Encoding.UTF8.GetBytes(jsonMessage);
 
-            client?.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, CancellationToken.None);
+            await client.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, CancellationToken.None);
         }
 
         public async Task<Response> ResponseAsync()
         {
-            return await ReciveAsync();
+            var response = await ReciveAsync();
+            OnResponse?.Invoke(response);
+            return response;
         }
 
         public async Task<Response> ReciveAsync()

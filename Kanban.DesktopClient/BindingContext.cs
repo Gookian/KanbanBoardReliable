@@ -16,7 +16,7 @@ namespace Kanban.DesktopClient
 
         public static UserControl HomePage = new HomePage();
 
-        public static UserControl BorderPage = new BoardPage();
+        public static UserControl BoardPage = new BoardPage();
 
         public static UserControl KanbanPage = new KanbanPage();
     }

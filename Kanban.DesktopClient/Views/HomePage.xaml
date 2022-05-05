@@ -7,7 +7,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"></ColumnDefinition>
@@ -31,7 +31,7 @@
                         </Border>
                     </Border>
                 </Border>
-                <TextBlock Grid.Row="2" Foreground="White" HorizontalAlignment="Center">Ivanov Ivan</TextBlock>
+                <TextBlock Grid.Row="2" Foreground="White" HorizontalAlignment="Center" Text="{Binding Login}"></TextBlock>
                 <TextBlock Grid.Row="3" Foreground="#FF616161" HorizontalAlignment="Center">Ivan.I@mail.ru</TextBlock>
                 <Border Grid.Row="4">
                     <Grid>

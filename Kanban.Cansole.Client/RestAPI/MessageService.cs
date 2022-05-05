@@ -9,21 +9,15 @@ namespace Kanban.CansoleClient.RestAPI
     {
         public static ClientWebSocket? client;
 
-        private Response response;
-
         public MessageService(ClientWebSocket clientWebSocket)
         {
             client = clientWebSocket;
         }
 
-        public Response Send(Request request)
+        public void Send(Request request)
         {
             SendMessage(request);
             ResponseAsync();
-
-            Thread.Sleep(1000);
-
-            return response;
         }
 
         public void SendMessage(Request request)
@@ -36,7 +30,22 @@ namespace Kanban.CansoleClient.RestAPI
 
         public async void ResponseAsync()
         {
-            response = await ReciveAsync();
+            var response = await ReciveAsync();
+            Console.WriteLine(response.Code);
+            Console.WriteLine(response.Header);
+
+            try
+            {
+                Token? token = JsonConvert.DeserializeObject<Token>(response.Body.ToString());
+                Console.WriteLine(token.Id);
+                Console.WriteLine(token.Lifetime);
+            }
+            catch { }
+            try
+            {
+                Console.WriteLine(response.Body.ToString());
+            }
+            catch { }
         }
 
         public async Task<Response> ReciveAsync()

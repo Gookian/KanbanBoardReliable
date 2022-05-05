@@ -26,5 +26,10 @@ namespace Kanban.DesktopClient.Views
 
             BindingContext.HomeFrame = HomeFrame;
         }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            HomeFrame.Child = BindingContext.BoardPage;
+        }
     }
 }
