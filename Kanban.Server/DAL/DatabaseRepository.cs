@@ -7,14 +7,14 @@ namespace Kanban.Server.DAL
     {
         private static Context db = new Context();
 
-        public static DbSet<Board> GetAllBoards()
+        public static List<Board> GetAllBoards()
         {
-            return db.Boards;
+            return db.Boards.ToList();
         }
 
-        public static DbSet<Column> GetAllColumns()
+        public static List<Column> GetAllColumns()
         {
-            return db.Columns;
+            return db.Columns.ToList();
         }
 
         public static DbSet<Card> GetAllCards()

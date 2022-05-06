@@ -22,7 +22,7 @@ namespace Kanban.Server.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=DESKTOP-UEBLV7T\\SQLEXPRESS;Database=KanbanDB;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer("Server=DESKTOP-HKRTS9P;Database=KanbanDB;Trusted_Connection=True;");
         }
     }
 }

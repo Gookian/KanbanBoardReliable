@@ -96,9 +96,7 @@ namespace Kanban.Server.Handlers
 
             User? user = JsonConvert.DeserializeObject<User>(request.Body.ToString());
 
-            User userDB = DatabaseRepository.GetUserByNameAndPassword(user.Name, user.Password);
-
-            if (userDB != null)
+            if (DatabaseRepository.GetUserByNameAndPassword(user.Name, user.Password) != null)
             {
                 DateTime nowDate = DateTime.Now;
                 token.Lifetime = nowDate.AddMinutes(5);
