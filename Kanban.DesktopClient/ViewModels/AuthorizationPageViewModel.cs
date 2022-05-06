@@ -1,5 +1,6 @@
 ﻿using Core;
 using Kanban.DesktopClient.RestAPI;
+using Kanban.DesktopClient.Views;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Prism.Commands;
@@ -37,6 +38,11 @@ namespace Kanban.DesktopClient.ViewModels
             if (response.Code == 200)
             {
                 BindingContext.MainFrame.Child = BindingContext.HomePage;
+            }
+            else if (response.Code == 500)
+            {
+                ErrorWindow window = new ErrorWindow($"Пользователь не найден: {response.Code}", $"Пользователь не существует, проверьте вверенные данные!");
+                window.Show();
             }
         }
 

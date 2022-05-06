@@ -1,5 +1,6 @@
 ﻿using Core;
 using Kanban.DesktopClient.RestAPI;
+using Kanban.DesktopClient.Views;
 using Prism.Commands;
 using System;
 
@@ -43,6 +44,11 @@ namespace Kanban.DesktopClient.ViewModels
             if (response.Code == 200)
             {
                 BindingContext.MainFrame.Child = BindingContext.AuthorizationPage;
+            }
+            else if(response.Code == 503)
+            {
+                ErrorWindow window = new ErrorWindow($"Имя уже занято: {response.Code}", $"{response.Header} уже существует, попробуйте изменить имя!");
+                window.Show();
             }
         }
     }
