@@ -10,6 +10,14 @@ namespace Kanban.DesktopClient
 
         public static Border HomeFrame { get; set; }
 
+        public static StackPanel PersonalBoards { get; set; }
+
+        public static StackPanel SpaceForColumn { get; set; }
+
+        public static Grid PlaceToPupup { get; set; }
+
+        public static TextBlock KanbanPageName { get; set; }
+
         public static UserControl RegistrationPage = new RegistrationPage();
 
         public static UserControl AuthorizationPage = new AuthorizationPage();

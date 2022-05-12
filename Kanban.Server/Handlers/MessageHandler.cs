@@ -47,6 +47,10 @@ namespace Kanban.Server.Handlers
         {
             await base.OnDisconnected(socket);
         }
+        public static T ConvertTo<T>(object obj)
+        {
+            return JsonConvert.DeserializeObject<T>(obj.ToString());
+        }
 
         public override async Task Receive(WebSocket socket, WebSocketReceiveResult result, byte[] buffer)
         {
@@ -60,6 +64,12 @@ namespace Kanban.Server.Handlers
             {
                 if (request.Header == "User")
                     PostUser(request, socket);
+                else if (request.Header == "Board")
+                    PostBoard(request, socket);
+                else if (request.Header == "Column")
+                    PostColumn(request, socket);
+                else if (request.Header == "Card")
+                    PostCard(request, socket);
                 /*else if (request.Header == "Board")
                     PostBoard(request);
                 else if (request.Header == "Column")
@@ -71,6 +81,14 @@ namespace Kanban.Server.Handlers
             {
                 if (request.Header == "Authentication")
                     GetAuthentication(request, socket);
+                else if(request.Header == "Boards")
+                    GetBoards(request, socket);
+                else if (request.Header == "ColumnsByBoard")
+                    GetColumnsByBoard(request, socket);
+                else if (request.Header == "CardsByColumn")
+                    GetCardsByColumn(request, socket);
+                else if (request.Header == "BoardNameById")
+                    BoardNameById(request, socket);
                 /*if (request.Header == "Users")
                     GetUsers(request);
                 else if(request.Header == "Boards")
@@ -94,7 +112,7 @@ namespace Kanban.Server.Handlers
 
             Token token = connectionManager.GetToken(socket);
 
-            User? user = JsonConvert.DeserializeObject<User>(request.Body.ToString());
+            User? user = ConvertTo<User>(request.Body);
 
             if (DatabaseRepository.GetUserByNameAndPassword(user.Name, user.Password) != null)
             {
@@ -116,6 +134,195 @@ namespace Kanban.Server.Handlers
                 Body = body
             };
 
+            ConsoleLogger.Log(new Debug(), $"Code: {code}");
+
+            var responseJson = JsonConvert.SerializeObject(response);
+
+            await SendMessage(token, responseJson);
+        }
+
+        private async void GetBoards(Request request, WebSocket socket)
+        {
+            int code = 200;
+            string header = request.Header;
+            object body = "Borders geted";
+
+            Token token = connectionManager.GetToken(socket);
+
+            List<Board> boards = new List<Board>();
+
+            try
+            {
+                boards = DatabaseRepository.GetAllBoards();
+                body = boards;
+            }
+            catch
+            {
+                code = 502;
+                header = "Error";
+                body = "Ошибка добавления в базу данных";
+                ConsoleLogger.Log(new Error(), $"Error adding to the database, code: {code}");
+            }
+
+            Response response = new Response
+            {
+                Code = code,
+                Header = header,
+                Body = body
+            };
+
+            ConsoleLogger.Log(new Debug(), $"Code: {code}");
+
+            var responseJson = JsonConvert.SerializeObject(response);
+
+            await SendMessage(token, responseJson);
+        }
+
+        private async void BoardNameById(Request request, WebSocket socket)
+        {
+            int code = 200;
+            string header = request.Header;
+            object body = "Border geted";
+
+            Token token = connectionManager.GetToken(socket);
+
+            string name = "";
+            Guid id = new Guid();
+
+            try
+            {
+                id = new Guid(request.Body.ToString());
+            }
+            catch
+            {
+                code = 501;
+                header = "Error";
+                body = "Не верный формат тела запроса";
+                ConsoleLogger.Log(new Error(), $"Invalid request body format, code: {code}");
+            }
+
+            try
+            {
+                name = DatabaseRepository.GetBorderNameById(id);
+                body = name;
+            }
+            catch
+            {
+                code = 502;
+                header = "Error";
+                body = "Ошибка добавления в базу данных";
+                ConsoleLogger.Log(new Error(), $"Error adding to the database, code: {code}");
+            }
+
+            Response response = new Response
+            {
+                Code = code,
+                Header = header,
+                Body = body
+            };
+
+            ConsoleLogger.Log(new Debug(), $"Code: {code}");
+
+            var responseJson = JsonConvert.SerializeObject(response);
+
+            await SendMessage(token, responseJson);
+        }
+
+        private async void GetColumnsByBoard(Request request, WebSocket socket)
+        {
+            int code = 200;
+            string header = request.Header;
+            object body = "Border geted";
+
+            Token token = connectionManager.GetToken(socket);
+
+            List<Column> columns = new List<Column>();
+            Guid id = new Guid();
+
+            try
+            {
+                id = new Guid(request.Body.ToString());
+            }
+            catch
+            {
+                code = 501;
+                header = "Error";
+                body = "Не верный формат тела запроса";
+                ConsoleLogger.Log(new Error(), $"Invalid request body format, code: {code}");
+            }
+
+            try
+            {
+                columns = DatabaseRepository.GetColumnsByBoardId(id);
+                body = columns;
+            }
+            catch
+            {
+                code = 502;
+                header = "Error";
+                body = "Ошибка добавления в базу данных";
+                ConsoleLogger.Log(new Error(), $"Error adding to the database, code: {code}");
+            }
+
+            Response response = new Response
+            {
+                Code = code,
+                Header = header,
+                Body = body
+            };
+
+            ConsoleLogger.Log(new Debug(), $"Code: {code}");
+
+            var responseJson = JsonConvert.SerializeObject(response);
+
+            await SendMessage(token, responseJson);
+        }
+
+        private async void GetCardsByColumn(Request request, WebSocket socket)
+        {
+            int code = 200;
+            string header = request.Header;
+            object body = "Border geted";
+
+            Token token = connectionManager.GetToken(socket);
+
+            List<Card> cards = new List<Card>();
+            Guid id = new Guid();
+
+            try
+            {
+                id = new Guid(request.Body.ToString());
+            }
+            catch
+            {
+                code = 501;
+                header = "Error";
+                body = "Не верный формат тела запроса";
+                ConsoleLogger.Log(new Error(), $"Invalid request body format, code: {code}");
+            }
+
+            try
+            {
+                cards = DatabaseRepository.GetCardsByColumnId(id);
+                body = cards;
+            }
+            catch
+            {
+                code = 502;
+                header = "Error";
+                body = "Ошибка добавления в базу данных";
+                ConsoleLogger.Log(new Error(), $"Error adding to the database, code: {code}");
+            }
+
+            Response response = new Response
+            {
+                Code = code,
+                Header = header,
+                Body = body
+            };
+
+            ConsoleLogger.Log(new Debug(), $"Code: {code}");
+
             var responseJson = JsonConvert.SerializeObject(response);
 
             await SendMessage(token, responseJson);
@@ -133,7 +340,7 @@ namespace Kanban.Server.Handlers
 
             try
             {
-                user = JsonConvert.DeserializeObject<User>(request.Body.ToString());
+                user = ConvertTo<User>(request.Body);
             }
             catch
             {
@@ -171,7 +378,164 @@ namespace Kanban.Server.Handlers
                 Body = body
             };
 
+            ConsoleLogger.Log(new Debug(), $"Code: {code}");
+
             var responseJson = JsonConvert.SerializeObject(response);
+
+            await SendMessage(token, responseJson);
+        }
+
+        private async void PostBoard(Request request, WebSocket socket)
+        {
+            int code = 200;
+            string header = request.Header;
+            object body = "";
+
+            Token token = connectionManager.GetToken(socket);
+
+            Board? board = new Board();
+
+            try
+            {
+                board = ConvertTo<Board>(request.Body);
+                body = board;
+            }
+            catch
+            {
+                code = 501;
+                header = "Error";
+                body = "Не верный формат тела запроса";
+                ConsoleLogger.Log(new Error(), $"Invalid request body format, code: {code}");
+            }
+
+            try
+            {
+                DatabaseRepository.Add(board);
+            }
+            catch
+            {
+                code = 502;
+                header = "Error";
+                body = "Ошибка добавления в базу данных";
+                ConsoleLogger.Log(new Error(), $"Error adding to the database, code: {code}");
+            }
+
+            Response response = new Response
+            {
+                Code = code,
+                Header = header,
+                Body = body
+            };
+
+            ConsoleLogger.Log(new Debug(), $"Code: {code}");
+
+            var responseJson = JsonConvert.SerializeObject(response);
+
+            await SendMessage(token, responseJson);
+        }
+
+        private async void PostColumn(Request request, WebSocket socket)
+        {
+            int code = 200;
+            string header = request.Header;
+            object body = "";
+
+            Token token = connectionManager.GetToken(socket);
+
+            Column column = new Column();
+
+            try
+            {
+                column = ConvertTo<Column>(request.Body);
+            }
+            catch
+            {
+                code = 501;
+                header = "Error";
+                body = "Не верный формат тела запроса";
+                ConsoleLogger.Log(new Error(), $"Invalid request body format, code: {code}");
+            }
+
+            try
+            {
+                DatabaseRepository.Add(column);
+                body = column;
+            }
+            catch
+            {
+                code = 502;
+                header = "Error";
+                body = "Ошибка добавления в базу данных";
+                ConsoleLogger.Log(new Error(), $"Error adding to the database, code: {code}");
+            }
+
+            Response response = new Response
+            {
+                Code = code,
+                Header = header,
+                Body = body
+            };
+
+            ConsoleLogger.Log(new Debug(), $"Code: {code}");
+
+            var responseJson = JsonConvert.SerializeObject(response, Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                    });
+
+            await SendMessage(token, responseJson);
+        }
+
+        private async void PostCard(Request request, WebSocket socket)
+        {
+            int code = 200;
+            string header = request.Header;
+            object body = "";
+
+            Token token = connectionManager.GetToken(socket);
+
+            Card card = new Card();
+
+            try
+            {
+                card = ConvertTo<Card>(request.Body);
+            }
+            catch
+            {
+                code = 501;
+                header = "Error";
+                body = "Не верный формат тела запроса";
+                ConsoleLogger.Log(new Error(), $"Invalid request body format, code: {code}");
+            }
+
+            try
+            {
+                DatabaseRepository.Add(card);
+                body = card;
+            }
+            catch
+            {
+                code = 502;
+                header = "Error";
+                body = "Ошибка добавления в базу данных";
+                ConsoleLogger.Log(new Error(), $"Error adding to the database, code: {code}");
+            }
+
+            Response response = new Response
+            {
+                Code = code,
+                Header = header,
+                Body = body
+            };
+
+            ConsoleLogger.Log(new Debug(), $"Code: {code}");
+
+            var responseJson = JsonConvert.SerializeObject(response, Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                    });
 
             await SendMessage(token, responseJson);
         }

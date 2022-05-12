@@ -1,7 +1,6 @@
 ﻿using Core;
-using Microsoft.EntityFrameworkCore;
 
-namespace Kanban.Server.DAL
+namespace TestFunctionDataBase
 {
     public class DatabaseRepository
     {
@@ -54,27 +53,11 @@ namespace Kanban.Server.DAL
             }
         }
 
-        public static string GetBorderNameById(Guid id)
-        {
-            using (Context db = new Context())
-            {
-                return db.Boards.FirstOrDefault(x => x.Id == id).Name;
-            }
-        }
-
         public static List<Column>? GetColumnsByBoardId(Guid id)
         {
             using (Context db = new Context())
             {
                 return db.Columns.Where(x => x.BoardId == id).ToList();
-            }
-        }
-
-        public static List<Card>? GetCardsByColumnId(Guid id)
-        {
-            using (Context db = new Context())
-            {
-                return db.Cards.Where(x => x.ColumnId == id).ToList();
             }
         }
 
@@ -232,60 +215,5 @@ namespace Kanban.Server.DAL
                 return null;
             }
         }
-
-        /*
-        private static Context db = new Context();
-
-        public static List<Board> GetAllBoards()
-        {
-            return db.Boards.ToList();
-        }
-
-        public static List<Column> GetAllColumns()
-        {
-            return db.Columns.ToList();
-        }
-
-        public static List<Card> GetAllCards()
-        {
-            return db.Cards.ToList();
-        }
-
-        public static List<User> GetAllUsers()
-        {
-            return db.Users.ToList();
-        }
-
-        public static User GetUserByNameAndPassword(string name, string password)
-        {
-            return db.Users.Where(x => x.Name == name && x.Password == password).FirstOrDefault();
-        }
-
-        public static User GetUserByName(string name)
-        {
-            return db.Users.Where(x => x.Name == name).FirstOrDefault();
-        }
-
-        public static Board GetBoardById(Guid id)
-        {
-            return db.Boards.Where(x => x.Id == id).FirstOrDefault();
-        }
-
-        public static void Add<T>(T element)
-        {
-            db.Add(element);
-            db.SaveChanges();
-        }
-
-        public static void AddColumn(Column column)
-        {
-            Board board = db.Boards.FirstOrDefault(x => x.Id == column.BoardId);
-
-            board.Column.Add(new Column { Name = "BoBo", BoardId = board.Id});
-
-            //db.Add(column);
-            db.SaveChanges();
-        }
-        */
     }
 }
