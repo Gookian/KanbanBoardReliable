@@ -1,7 +1,4 @@
-﻿using Core;
-using Kanban.Server.DAL;
-
-namespace Kanban.ConsoleClient
+﻿namespace Kanban.ConsoleClient
 {
     class Program
     {

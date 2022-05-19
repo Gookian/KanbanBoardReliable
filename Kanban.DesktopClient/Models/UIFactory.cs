@@ -175,6 +175,57 @@ namespace Kanban.DesktopClient.Models
 
         public static Border CreateCard(Card card)
         {
+            Border border2 = new Border()
+            {
+                Width = 5,
+                Background = new SolidColorBrush(Color.FromRgb(57, 62, 70)),
+                CornerRadius = new CornerRadius(2, 2, 0, 0),
+            };
+
+            Border border1 = new Border()
+            {
+                Width = 3.53,
+                Height = 3.53,
+                Background = new SolidColorBrush(Color.FromRgb(26, 72, 146)),
+                RenderTransformOrigin = new Point(0.5, 0.5),
+                RenderTransform = new TransformGroup() { Children = { new RotateTransform(45), new TranslateTransform(0, -2) } },
+            };
+
+            Grid gridEdit2 = new Grid();
+            gridEdit2.RowDefinitions.Add(new RowDefinition());
+            gridEdit2.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(4) });
+            gridEdit2.RenderTransform = new RotateTransform(30);
+            gridEdit2.RenderTransformOrigin = new Point(0.5, 0.5);
+            gridEdit2.Height = 20;
+            gridEdit2.Children.Add(border1);
+            gridEdit2.Children.Add(border2);
+            Grid.SetRow(border1, 1);
+
+            Grid gridEdit1 = new Grid();
+            gridEdit1.Children.Add(gridEdit2);
+
+            Border boardLine1 = new Border()
+            {
+                Height = 4,
+                Background = new SolidColorBrush(Color.FromRgb(57, 62, 70)),
+                CornerRadius = new CornerRadius(2),
+                RenderTransformOrigin = new Point(0.5, 0.5),
+                RenderTransform = new RotateTransform(-45)
+            };
+
+            Border boardLine2 = new Border()
+            {
+                Height = 4,
+                Background = new SolidColorBrush(Color.FromRgb(57, 62, 70)),
+                CornerRadius = new CornerRadius(2),
+                RenderTransformOrigin = new Point(0.5, 0.5),
+                RenderTransform = new RotateTransform(45)
+            };
+
+            Grid gridDelete = new Grid();
+            gridDelete.Children.Add(boardLine1);
+            gridDelete.Children.Add(boardLine2);
+
             TextBlock textBlockTitle = new TextBlock()
             {
                 Text = card.Title,
@@ -194,7 +245,7 @@ namespace Kanban.DesktopClient.Models
 
             TextBlock textBlockStoryPoint = new TextBlock()
             {
-                Text = card.StoryPoint.ToString(),
+                Text = "StoryPoint: " + card.StoryPoint.ToString(),
                 Foreground = new SolidColorBrush(Color.FromRgb(57, 62, 70)),
             };
 
@@ -206,9 +257,10 @@ namespace Kanban.DesktopClient.Models
             };
 
             Grid grid = new Grid();
-            grid.ColumnDefinitions.Add(new ColumnDefinition());
+            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(90) });
             grid.ColumnDefinitions.Add(new ColumnDefinition());
             grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(30) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(20) });
             grid.RowDefinitions.Add(new RowDefinition());
             grid.RowDefinitions.Add(new RowDefinition());
             grid.RowDefinitions.Add(new RowDefinition());
@@ -216,14 +268,18 @@ namespace Kanban.DesktopClient.Models
             grid.Children.Add(textBlockDescription);
             grid.Children.Add(textBlockStoryPoint);
             grid.Children.Add(textBlockDate);
+            grid.Children.Add(gridDelete);
+            grid.Children.Add(gridEdit1);
 
             Grid.SetColumnSpan(textBlockTitle, 2);
             Grid.SetRow(textBlockDescription, 1);
-            Grid.SetColumnSpan(textBlockDescription, 3);
+            Grid.SetColumnSpan(textBlockDescription, 4);
             Grid.SetRow(textBlockStoryPoint, 2);
             Grid.SetRow(textBlockDate, 2);
             Grid.SetColumn(textBlockDate, 1);
-            Grid.SetColumnSpan(textBlockDate, 2);
+            Grid.SetColumnSpan(textBlockDate, 3);
+            Grid.SetColumn(gridDelete, 3);
+            Grid.SetColumn(gridEdit1, 2);
 
             Border border = new Border()
             {
@@ -413,7 +469,7 @@ namespace Kanban.DesktopClient.Models
             date.FontSize = 16;
             date.FontFamily = new FontFamily("Bahnschrift SemiBold");
             date.Margin = new Thickness(0, 8, 0, 0);
-            date.Text = "StoryPoint";
+            date.Text = "Дата";
 
             TextBox textBoxStoryPoint = new TextBox();
             textBoxStoryPoint.Margin = new Thickness(30, 0, 30, 30);
