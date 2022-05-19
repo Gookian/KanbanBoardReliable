@@ -523,11 +523,25 @@ namespace Kanban.Server.Handlers
         }
 
         // Илья
-        private async void EditCard(Request request, WebSocket socket)
+        private async void EditCardById(Request request, WebSocket socket)
         {
             int code = 200;
             string header = request.Header;
             object body = "";
+
+            Card card = new Card();
+
+            try
+            { 
+                card = ConvertTo<Card>(request.Body);
+                DatabaseRepository.EditCard(card);
+                body = card;
+            }
+            catch
+            {
+                code = 500;
+                header = "Error";
+            }
 
             Response response = new Response
             {
@@ -542,11 +556,24 @@ namespace Kanban.Server.Handlers
         }
 
         // Илья
-        private async void EditColumn(Request request, WebSocket socket)
+        private async void EditColumnById(Request request, WebSocket socket)
         {
             int code = 200;
             string header = request.Header;
             object body = "";
+
+            Column column = new Column();
+
+            try
+            {
+                column = ConvertTo<Column>(request.Body);
+                body = column;
+            }
+            catch
+            {
+                code = 500;
+                header = "Error";
+            }
 
             Response response = new Response
             {
@@ -561,11 +588,123 @@ namespace Kanban.Server.Handlers
         }
 
         // Илья
-        private async void EditBoard(Request request, WebSocket socket)
+        private async void EditBoardById(Request request, WebSocket socket)
         {
             int code = 200;
             string header = request.Header;
             object body = "";
+
+            Board board = new Board();
+
+            try
+            {
+                board = ConvertTo<Board>(request.Body);
+                body = board;
+            }
+            catch
+            {
+                code = 500;
+                header = "Error";
+            }
+
+            Response response = new Response
+            {
+                Code = code,
+                Header = header,
+                Body = body
+            };
+
+            var responseJson = JsonConvert.SerializeObject(response);
+
+            await SendMessageToAll(responseJson);
+        }
+
+        // Илья
+        private async void DeleteCardById(Request request, WebSocket socket)
+        {
+            int code = 200;
+            string header = request.Header;
+            object body = "";
+
+            Card card = new Card();
+
+            try
+            {
+                card = ConvertTo<Card>(request.Body);
+                DatabaseRepository.DeleteCardById(card.Id);
+                body = card;
+            }
+            catch
+            {
+                code = 500;
+                header = "Error";
+            }
+
+            Response response = new Response
+            {
+                Code = code,
+                Header = header,
+                Body = body
+            };
+
+            var responseJson = JsonConvert.SerializeObject(response);
+
+            await SendMessageToAll(responseJson);
+        }
+
+        // Илья
+        private async void DeleteColumnById(Request request, WebSocket socket)
+        {
+            int code = 200;
+            string header = request.Header;
+            object body = "";
+
+            Column column = new Column();
+
+            try
+            {
+                column = ConvertTo<Column>(request.Body);
+                DatabaseRepository.DeleteColumnById(column.Id);
+                body = column;
+            }
+            catch
+            {
+                code = 500;
+                header = "Error";
+            }
+
+            Response response = new Response
+            {
+                Code = code,
+                Header = header,
+                Body = body
+            };
+
+            var responseJson = JsonConvert.SerializeObject(response);
+
+            await SendMessageToAll(responseJson);
+        }
+
+        // Илья
+        private async void DeleteBoardById(Request request, WebSocket socket)
+        {
+            int code = 200;
+            string header = request.Header;
+            object body = "";
+
+            Board board = new Board();
+
+            try
+            {
+                board = ConvertTo<Board>(request.Body);
+                DatabaseRepository.DeleteBoardById(board.Id);
+                body = board;
+            }
+            catch
+            {
+                code = 500;
+                header = "Error";
+            }
 
             Response response = new Response
             {
