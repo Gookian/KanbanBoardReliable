@@ -1,10 +1,7 @@
 ﻿using Core;
 using Kanban.DesktopClient.RestAPI;
 using Kanban.DesktopClient.Views;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using Prism.Commands;
-using System.Collections.Generic;
 
 namespace Kanban.DesktopClient.ViewModels
 {

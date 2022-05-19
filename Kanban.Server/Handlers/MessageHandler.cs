@@ -1,12 +1,10 @@
 ﻿using Kanban.Server.SocketsManager;
 using System.Net.WebSockets;
 using System.Text;
-using System.Collections.Concurrent;
 using Core;
 using Newtonsoft.Json;
 using Kanban.Server.DAL;
 using Kanban.Server.Log;
-using Microsoft.EntityFrameworkCore;
 
 namespace Kanban.Server.Handlers
 {

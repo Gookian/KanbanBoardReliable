@@ -1,9 +1,5 @@
-﻿using Core;
-using Kanban.DesktopClient.Models;
-using Kanban.DesktopClient.RestAPI;
+﻿using Kanban.DesktopClient.Models;
 using Prism.Commands;
-using System;
-using System.Windows.Controls;
 
 namespace Kanban.DesktopClient.ViewModels
 {
