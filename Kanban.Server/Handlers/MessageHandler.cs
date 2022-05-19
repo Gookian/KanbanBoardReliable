@@ -12,8 +12,6 @@ namespace Kanban.Server.Handlers
 {
     public class MessageHandler : SocketHandler
     {
-        //private readonly ConcurrentDictionary<Token, WebSocket> _connections = new();
-
         private ConnectionManager connectionManager;
 
         public MessageHandler(ConnectionManager connectionManager) : base(connectionManager)
@@ -28,8 +26,6 @@ namespace Kanban.Server.Handlers
             Token token = connectionManager.GetToken(socket);
 
             ConsoleLogger.Log(new Info(), $"New connection: {token.Id} / {token.Lifetime}");
-
-            //_connections.TryAdd(token, socket);
 
             Response response = new Response
             {
@@ -70,12 +66,6 @@ namespace Kanban.Server.Handlers
                     PostColumn(request, socket);
                 else if (request.Header == "Card")
                     PostCard(request, socket);
-                /*else if (request.Header == "Board")
-                    PostBoard(request);
-                else if (request.Header == "Column")
-                    PostColumn(request);
-                else if (request.Header == "Card")
-                    PostCard(request);*/
             }
             else if (request?.Method == "GET")
             {
@@ -89,14 +79,6 @@ namespace Kanban.Server.Handlers
                     GetCardsByColumn(request, socket);
                 else if (request.Header == "BoardNameById")
                     BoardNameById(request, socket);
-                /*if (request.Header == "Users")
-                    GetUsers(request);
-                else if(request.Header == "Boards")
-                    GetBoards(request);
-                else if(request.Header == "Columns")
-                    GetColumns(request);
-                else if(request.Header == "Cards")
-                    GetCards(request);*/
             }
 
             startTime.Stop();
@@ -540,300 +522,61 @@ namespace Kanban.Server.Handlers
             await SendMessage(token, responseJson);
         }
 
-        /* private async void PostUser(Request request)
-         {
-             int code = 200;
-             string header = request.Header;
-             string body = "The user is posted";
+        // Илья
+        private async void EditCard(Request request, WebSocket socket)
+        {
+            int code = 200;
+            string header = request.Header;
+            object body = "";
 
-             User user = new User();
+            Response response = new Response
+            {
+                Code = code,
+                Header = header,
+                Body = body
+            };
 
-             try
-             {
-                 user = JsonConvert.DeserializeObject<User>(request.Body.ToString());
-             }
-             catch
-             {
-                 code = 501;
-                 header = "Error";
-                 body = "Не верный формат тела запроса";
-                 ConsoleLogger.Log(new Error(), $"Invalid request body format, code: {code}");
-             }
+            var responseJson = JsonConvert.SerializeObject(response);
 
-             try
-             {
-                 DatabaseRepository.Add(user);
-             }
-             catch
-             {
-                 code = 500;
-                 header = "Error";
-                 body = "Ошибка добавления в базу данных";
-                 ConsoleLogger.Log(new Error(), $"Error adding to the database, code: {code}");
-             }
+            await SendMessageToAll(responseJson);
+        }
 
-             Response response = new Response
-             {
-                 Code = code,
-                 Header = header,
-                 Body = body
-             };
+        // Илья
+        private async void EditColumn(Request request, WebSocket socket)
+        {
+            int code = 200;
+            string header = request.Header;
+            object body = "";
 
-             var responseJson = JsonConvert.SerializeObject(response);
+            Response response = new Response
+            {
+                Code = code,
+                Header = header,
+                Body = body
+            };
 
-             await SendMessageToAll(responseJson);
-         }
+            var responseJson = JsonConvert.SerializeObject(response);
 
-         private async void PostBoard(Request request)
-         {
-             int code = 200;
-             string header = request.Header;
-             string body = "The board is posted";
+            await SendMessageToAll(responseJson);
+        }
 
-             Board board = new Board();
+        // Илья
+        private async void EditBoard(Request request, WebSocket socket)
+        {
+            int code = 200;
+            string header = request.Header;
+            object body = "";
 
-             try
-             {
-                 board = JsonConvert.DeserializeObject<Board>(request.Body.ToString());
-             }
-             catch
-             {
-                 code = 501;
-                 header = "Error";
-                 body = "Не верный формат тела запроса";
-                 ConsoleLogger.Log(new Error(), $"Invalid request body format, code: {code}");
-             }
+            Response response = new Response
+            {
+                Code = code,
+                Header = header,
+                Body = body
+            };
 
-             try
-             {
-                 DatabaseRepository.Add(board);
-             }
-             catch
-             {
-                 code = 500;
-                 header = "Error";
-                 body = "Ошибка добавления в базу данных";
-                 ConsoleLogger.Log(new Error(), $"Error adding to the database, code: {code}");
-             }
+            var responseJson = JsonConvert.SerializeObject(response);
 
-             Response response = new Response
-             {
-                 Code = code,
-                 Header = header,
-                 Body = body
-             };
-
-             var responseJson = JsonConvert.SerializeObject(response);
-
-             await SendMessageToAll(responseJson);
-         }
-
-         private async void PostColumn(Request request)
-         {
-             int code = 200;
-             string header = request.Header;
-             string body = "The column is posted";
-
-             Column column = new Column();
-
-             try
-             {
-                 column = JsonConvert.DeserializeObject<Column>(request.Body.ToString());
-             }
-             catch
-             {
-                 code = 501;
-                 header = "Error";
-                 body = "Не верный формат тела запроса";
-                 ConsoleLogger.Log(new Error(), $"Invalid request body format, code: {code}");
-             }
-
-             try
-             {
-                 DatabaseRepository.Add(column);
-             }
-             catch
-             {
-                 code = 500;
-                 header = "Error";
-                 body = "Ошибка добавления в базу данных";
-                 ConsoleLogger.Log(new Error(), $"Error adding to the database, code: {code}");
-             }
-
-             Response response = new Response
-             {
-                 Code = code,
-                 Header = header,
-                 Body = body
-             };
-
-             var responseJson = JsonConvert.SerializeObject(response);
-
-             await SendMessageToAll(responseJson);
-         }
-
-         private async void PostCard(Request request)
-         {
-             int code = 200;
-             string header = request.Header;
-             string body = "The column is posted";
-
-             Card card = new Card();
-
-             try
-             {
-                 card = JsonConvert.DeserializeObject<Card>(request.Body.ToString());
-             }
-             catch
-             {
-                 code = 501;
-                 header = "Error";
-                 body = "Не верный формат тела запроса";
-                 ConsoleLogger.Log(new Error(), $"Invalid request body format, code: {code}");
-             }
-
-             try
-             {
-                 DatabaseRepository.Add(card);
-             }
-             catch
-             {
-                 code = 500;
-                 header = "Error";
-                 body = "Ошибка добавления в базу данных";
-                 ConsoleLogger.Log(new Error(), $"Error adding to the database, code: {code}");
-             }
-
-             Response response = new Response
-             {
-                 Code = code,
-                 Header = header,
-                 Body = body
-             };
-
-             var responseJson = JsonConvert.SerializeObject(response);
-
-             await SendMessageToAll(responseJson);
-         }
-
-         private async void GetUsers(Request request)
-         {
-             int code = 200;
-             string header = request.Header;
-             object body;
-
-             try
-             {
-                 body = DatabaseRepository.GetAllUsers();
-             }
-             catch
-             {
-                 code = 502;
-                 header = "Error";
-                 body = "Ошибка получения данных из базы данных";
-                 ConsoleLogger.Log(new Error(), $"Error getting data from the database, code: {code}");
-             }
-
-             Response response = new Response
-             {
-                 Code = code,
-                 Header = header,
-                 Body = body
-             };
-
-             var responseJson = JsonConvert.SerializeObject(response);
-
-             await SendMessageToAll(responseJson);
-         }
-
-         private async void GetBoards(Request request)
-         {
-             int code = 200;
-             string header = request.Header;
-             object body;
-
-             try
-             {
-                 body = DatabaseRepository.GetAllBoards();
-             }
-             catch
-             {
-                 code = 502;
-                 header = "Error";
-                 body = "Ошибка получения данных из базы данных";
-                 ConsoleLogger.Log(new Error(), $"Error getting data from the database, code: {code}");
-             }
-
-             Response response = new Response
-             {
-                 Code = code,
-                 Header = header,
-                 Body = body
-             };
-
-             var responseJson = JsonConvert.SerializeObject(response);
-
-             await SendMessageToAll(responseJson);
-         }
-
-         private async void GetColumns(Request request)
-         {
-             int code = 200;
-             string header = request.Header;
-             object body;
-
-             try
-             {
-                 body = DatabaseRepository.GetAllColumns();
-             }
-             catch
-             {
-                 code = 502;
-                 header = "Error";
-                 body = "Ошибка получения данных из базы данных";
-                 ConsoleLogger.Log(new Error(), $"Error getting data from the database, code: {code}");
-             }
-
-             Response response = new Response
-             {
-                 Code = code,
-                 Header = header,
-                 Body = body
-             };
-
-             var responseJson = JsonConvert.SerializeObject(response);
-
-             await SendMessageToAll(responseJson);
-         }
-
-         private async void GetCards(Request request)
-         {
-             int code = 200;
-             string header = request.Header;
-             object body;
-
-             try
-             {
-                 body = DatabaseRepository.GetAllCards();
-             }
-             catch
-             {
-                 code = 502;
-                 header = "Error";
-                 body = "Ошибка получения данных из базы данных";
-                 ConsoleLogger.Log(new Error(), $"Error getting data from the database, code: {code}");
-             }
-
-             Response response = new Response
-             {
-                 Code = code,
-                 Header = header,
-                 Body = body
-             };
-
-             var responseJson = JsonConvert.SerializeObject(response);
-
-             await SendMessageToAll(responseJson);
-         }*/
+            await SendMessageToAll(responseJson);
+        }
     }
 }
