@@ -1,5 +1,4 @@
 ﻿using Kanban.DesktopClient.Models;
-using Kanban.DesktopClient.RestAPI;
 using Prism.Commands;
 
 

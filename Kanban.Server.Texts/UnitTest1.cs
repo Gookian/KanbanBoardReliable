@@ -1,4 +1,3 @@
-using Core;
 using Kanban.Server.DAL;
 using Kanban.Server.SocketsManager;
 using NUnit.Framework;
