@@ -1,6 +1,6 @@
 ﻿using Core;
 
-namespace Kanban.Server.DAL
+namespace TestFunctionDataBase
 {
     public class DatabaseRepository
     {
@@ -53,27 +53,11 @@ namespace Kanban.Server.DAL
             }
         }
 
-        public static string GetBorderNameById(Guid id)
-        {
-            using (Context db = new Context())
-            {
-                return db.Boards.FirstOrDefault(x => x.Id == id).Name;
-            }
-        }
-
         public static List<Column>? GetColumnsByBoardId(Guid id)
         {
             using (Context db = new Context())
             {
                 return db.Columns.Where(x => x.BoardId == id).ToList();
-            }
-        }
-
-        public static List<Card>? GetCardsByColumnId(Guid id)
-        {
-            using (Context db = new Context())
-            {
-                return db.Cards.Where(x => x.ColumnId == id).ToList();
             }
         }
 

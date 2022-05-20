@@ -1,4 +1,8 @@
-﻿using Prism.Commands;
+﻿using Core;
+using Kanban.DesktopClient.RestAPI;
+using Kanban.DesktopClient.Views;
+using Prism.Commands;
+using System;
 
 namespace Kanban.DesktopClient.ViewModels
 {
@@ -25,9 +29,27 @@ namespace Kanban.DesktopClient.ViewModels
             BindingContext.MainFrame.Child = BindingContext.AuthorizationPage;
         }
 
-        private void SignUp_Click()
+        private async void SignUp_Click()
         {
-            BindingContext.MainFrame.Child = BindingContext.AuthorizationPage;
+            var user = new User
+            {
+                Id = new Guid(),
+                Name = Login,
+                Password = Password,
+                Token = new Token { Id = new Guid(), Lifetime = new DateTime() },
+            };
+
+            var response = await ServerAPI.PostUser(user);
+
+            if (response.Code == 200)
+            {
+                BindingContext.MainFrame.Child = BindingContext.AuthorizationPage;
+            }
+            else if(response.Code == 503)
+            {
+                ErrorWindow window = new ErrorWindow($"Имя уже занято: {response.Code}", $"{response.Header} уже существует, попробуйте изменить имя!");
+                window.Show();
+            }
         }
     }
 }

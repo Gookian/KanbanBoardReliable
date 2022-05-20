@@ -7,13 +7,17 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
+        <Border Grid.Column="1" x:Name="HomeFrame" Background="#EEE"></Border>
         <Border Background="#00C2FF">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="10" RenderingBias="Quality" Opacity="0.5" ShadowDepth="0"/>
+            </Border.Effect>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="80"></RowDefinition>
@@ -31,7 +35,7 @@
                         </Border>
                     </Border>
                 </Border>
-                <TextBlock Grid.Row="2" Foreground="White" HorizontalAlignment="Center">Ivanov Ivan</TextBlock>
+                <TextBlock Grid.Row="2" Foreground="White" HorizontalAlignment="Center" Text="{Binding Login}"></TextBlock>
                 <TextBlock Grid.Row="3" Foreground="#FF616161" HorizontalAlignment="Center">Ivan.I@mail.ru</TextBlock>
                 <Border Grid.Row="4">
                     <Grid>
@@ -59,8 +63,6 @@
                     </Grid>
                 </Border>
             </Grid>
-        </Border>
-        <Border Grid.Column="1" x:Name="HomeFrame" Background="#EEE">
         </Border>
     </Grid>
 </UserControl>

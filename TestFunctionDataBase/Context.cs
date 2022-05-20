@@ -1,7 +1,7 @@
 ﻿using Core;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kanban.Server.DAL
+namespace TestFunctionDataBase
 {
     public class Context : DbContext
     {
@@ -22,7 +22,7 @@ namespace Kanban.Server.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer($"Server={ConfigConnection.ConnectionLineToDataBase};Database=KanbanDB;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer($"Server=DESKTOP-UEBLV7T\\SQLEXPRESS;Database=KanbanDB;Trusted_Connection=True;");
         }
     }
 }

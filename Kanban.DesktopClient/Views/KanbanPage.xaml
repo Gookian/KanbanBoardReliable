@@ -3,8 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Kanban.DesktopClient.Views"
-             mc:Ignorable="d">
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" Loaded="UserControl_Loaded">
     <Grid Background="#EEE">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -17,7 +19,11 @@
                 <RowDefinition Height="50"></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <TextBlock FontSize="20" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF393E46" Margin="20 0 0 0">Главная > Team board</TextBlock>
+            <TextBlock x:Name="KanbanPageName" FontSize="20" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF393E46" Margin="20 0 0 0" Text="Доски > Team board">
+                <TextBlock.InputBindings>
+                    <MouseBinding MouseAction="LeftClick" Command="{Binding PreviousPage}" />
+                </TextBlock.InputBindings>
+            </TextBlock>
             <StackPanel HorizontalAlignment="Right" Grid.Column="1" Orientation="Horizontal">
                 <Border Background="#92BDFE" Height="40" Width="40" CornerRadius="20" Margin="5">
                     <Border CornerRadius="20" Margin="2">
@@ -47,232 +53,285 @@
                     <Border.Background>
                         <ImageBrush ImageSource="/Views/AvatarNull.jpg"/>
                     </Border.Background>
-
                 </Border>
             </Border>
             <Border Grid.Row="1" Grid.ColumnSpan="4">
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
-                    <StackPanel Orientation="Horizontal" Margin="10 0 10 20">
-                        <Border Width="250" Margin="10 0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="270"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel x:Name="SpaceForColumn" Orientation="Horizontal" Margin="10 0 10 20">
+                            <!---->
+                            <Border Width="250" Margin="10 0">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="40"></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Foreground="#FF009BCC" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="18" FontWeight="Bold">Backlog</TextBlock>
+                                    <StackPanel Grid.Row="1">
+                                        <Border Background="#FF7979" Padding="10" Margin="10 5">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="90"></ColumnDefinition>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                    <ColumnDefinition Width="30"></ColumnDefinition>
+                                                    <ColumnDefinition Width="20"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <TextBlock FontSize="18" Grid.ColumnSpan="2" FontWeight="Bold" Foreground="#FF393E46" Margin="0 0 0 7">Сделать ГПО</TextBlock>
+                                                <TextBlock Grid.Row="1" Grid.ColumnSpan="4" TextWrapping="Wrap" Foreground="#FF393E46" Margin="0 0 0 7">Разработать диаграмму последовательностей, состояний и классов.</TextBlock>
+                                                <TextBlock Grid.Row="2" Foreground="#FF393E46">Story point: 10</TextBlock>
+                                                <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Right" Foreground="#FF393E46">Дата: 15.04.2022</TextBlock>
+                                                <Grid Grid.Column="3">
+                                                    <Border Height="2" Background="#FF393E46" CornerRadius="2" RenderTransformOrigin="0.5,0.5">
+                                                        <Border.RenderTransform>
+                                                            <TransformGroup>
+                                                                <RotateTransform Angle="-45"/>
+                                                            </TransformGroup>
+                                                        </Border.RenderTransform>
+                                                    </Border>
+                                                    <Border Height="2" Background="#FF393E46" CornerRadius="2" RenderTransformOrigin="0.5,0.5">
+                                                        <Border.RenderTransform>
+                                                            <TransformGroup>
+                                                                <RotateTransform Angle="45"/>
+                                                            </TransformGroup>
+                                                        </Border.RenderTransform>
+                                                    </Border>
+                                                </Grid>
+                                                <Grid Grid.Column="2">
+                                                    <Grid RenderTransformOrigin="0.5,0.5" Height="20">
+                                                        <Grid.RenderTransform>
+                                                            <TransformGroup>
+                                                                <RotateTransform Angle="30"/>
+                                                            </TransformGroup>
+                                                        </Grid.RenderTransform>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition></RowDefinition>
+                                                            <RowDefinition Height="4"></RowDefinition>
+                                                        </Grid.RowDefinitions>
+                                                        <Border Grid.Row="1" Width="3.53" Height="3.53" Background="#FF1A4892" RenderTransformOrigin="0.5,0.5">
+                                                            <Border.RenderTransform>
+                                                                <TransformGroup>
+                                                                    <RotateTransform Angle="45"/>
+                                                                    <TranslateTransform Y="-2"/>
+                                                                </TransformGroup>
+                                                            </Border.RenderTransform>
+                                                        </Border>
+                                                        <Border Width="5" Background="#FF393E46" CornerRadius="2 2 0 0"></Border>
+                                                    </Grid>
+                                                </Grid>
+                                            </Grid>
+                                        </Border>
+                                        <Border Background="#DCFF79" Padding="10" Margin="10 5">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                    <ColumnDefinition Width="30"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <TextBlock FontSize="18" Grid.ColumnSpan="2" FontWeight="Bold" Foreground="#FF393E46" Margin="0 0 0 7">Сделать ГПО</TextBlock>
+                                                <TextBlock Grid.Row="1" Grid.ColumnSpan="3" TextWrapping="Wrap" Foreground="#FF393E46" Margin="0 0 0 7">Разработать диаграмму последовательностей, состояний и классов.</TextBlock>
+                                                <TextBlock Grid.Row="2" Foreground="#FF393E46">Story point: 10</TextBlock>
+                                                <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Foreground="#FF393E46">Дата: 15.04.2022</TextBlock>
+                                            </Grid>
+                                        </Border>
+                                        <Border Background="#79FFAF" Padding="10" Margin="10 5">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                    <ColumnDefinition Width="30"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <TextBlock FontSize="18" Grid.ColumnSpan="2" FontWeight="Bold" Foreground="#FF393E46" Margin="0 0 0 7">Сделать ГПО</TextBlock>
+                                                <TextBlock Grid.Row="1" Grid.ColumnSpan="3" TextWrapping="Wrap" Foreground="#FF393E46" Margin="0 0 0 7">Разработать диаграмму последовательностей, состояний и классов.</TextBlock>
+                                                <TextBlock Grid.Row="2" Foreground="#FF393E46">Story point: 10</TextBlock>
+                                                <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Foreground="#FF393E46">Дата: 15.04.2022</TextBlock>
+                                            </Grid>
+                                        </Border>
+                                        <Border Background="#79E7FF" Padding="10" Margin="10 5">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                    <ColumnDefinition Width="30"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <TextBlock FontSize="18" Grid.ColumnSpan="2" FontWeight="Bold" Foreground="#FF393E46" Margin="0 0 0 7">Сделать ГПО</TextBlock>
+                                                <TextBlock Grid.Row="1" Grid.ColumnSpan="3" TextWrapping="Wrap" Foreground="#FF393E46" Margin="0 0 0 7">Разработать диаграмму последовательностей, состояний и классов.</TextBlock>
+                                                <TextBlock Grid.Row="2" Foreground="#FF393E46">Story point: 10</TextBlock>
+                                                <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Foreground="#FF393E46">Дата: 15.04.2022</TextBlock>
+                                            </Grid>
+                                        </Border>
+                                        <Border Padding="10" Margin="10 5">
+                                            <Grid>
+                                                <TextBlock FontSize="16" Grid.ColumnSpan="2" FontWeight="Bold" Foreground="#393E46" VerticalAlignment="Center" HorizontalAlignment="Center">Добавить карточку +</TextBlock>
+                                            </Grid>
+                                        </Border>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                            <Border Width="250" Margin="10 0">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="40"></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Foreground="#FF009BCC" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="18" FontWeight="Bold">To Do</TextBlock>
+                                    <StackPanel Grid.Row="1">
+                                        <Border Background="#799FFF" Padding="10" Margin="10 5">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                    <ColumnDefinition Width="30"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <TextBlock FontSize="18" Grid.ColumnSpan="2" FontWeight="Bold" Foreground="#FF393E46" Margin="0 0 0 7">Сделать ГПО</TextBlock>
+                                                <TextBlock Grid.Row="1" Grid.ColumnSpan="3" TextWrapping="Wrap" Foreground="#FF393E46" Margin="0 0 0 7">Разработать диаграмму последовательностей, состояний и классов.</TextBlock>
+                                                <TextBlock Grid.Row="2" Foreground="#FF393E46">Story point: 10</TextBlock>
+                                                <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Foreground="#FF393E46">Дата: 15.04.2022</TextBlock>
+                                            </Grid>
+                                        </Border>
+                                        <Border Background="#BC79FF" Padding="10" Margin="10 5">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                    <ColumnDefinition Width="30"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <TextBlock FontSize="18" Grid.ColumnSpan="2" FontWeight="Bold" Foreground="#FF393E46" Margin="0 0 0 7">Сделать ГПО</TextBlock>
+                                                <TextBlock Grid.Row="1" Grid.ColumnSpan="3" TextWrapping="Wrap" Foreground="#FF393E46" Margin="0 0 0 7">Разработать диаграмму последовательностей, состояний и классов.</TextBlock>
+                                                <TextBlock Grid.Row="2" Foreground="#FF393E46">Story point: 10</TextBlock>
+                                                <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Foreground="#FF393E46">Дата: 15.04.2022</TextBlock>
+                                            </Grid>
+                                        </Border>
+                                        <Border Padding="10" Margin="10 5">
+                                            <Grid>
+                                                <TextBlock FontSize="16" Grid.ColumnSpan="2" FontWeight="Bold" Foreground="#393E46" VerticalAlignment="Center" HorizontalAlignment="Center">Добавить карточку +</TextBlock>
+                                            </Grid>
+                                        </Border>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                            <Border Width="250" Margin="10 0">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="40"></RowDefinition>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Foreground="#FF009BCC" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="18" FontWeight="Bold">In Process</TextBlock>
+                                    <StackPanel Grid.Row="1">
+                                        <Border Background="#EC79FF" Padding="10" Margin="10 5">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                    <ColumnDefinition Width="30"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <TextBlock FontSize="18" Grid.ColumnSpan="2" FontWeight="Bold" Foreground="#FF393E46" Margin="0 0 0 7">Сделать ГПО</TextBlock>
+                                                <TextBlock Grid.Row="1" Grid.ColumnSpan="3" TextWrapping="Wrap" Foreground="#FF393E46" Margin="0 0 0 7">Разработать диаграмму последовательностей, состояний и классов.</TextBlock>
+                                                <TextBlock Grid.Row="2" Foreground="#FF393E46">Story point: 10</TextBlock>
+                                                <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Foreground="#FF393E46">Дата: 15.04.2022</TextBlock>
+                                            </Grid>
+                                        </Border>
+                                        <Border Background="#FF7979" Padding="10" Margin="10 5">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                    <ColumnDefinition Width="30"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <TextBlock FontSize="18" Grid.ColumnSpan="2" FontWeight="Bold" Foreground="#FF393E46" Margin="0 0 0 7">Сделать ГПО</TextBlock>
+                                                <TextBlock Grid.Row="1" Grid.ColumnSpan="3" TextWrapping="Wrap" Foreground="#FF393E46" Margin="0 0 0 7">Разработать диаграмму последовательностей, состояний и классов.</TextBlock>
+                                                <TextBlock Grid.Row="2" Foreground="#FF393E46">Story point: 10</TextBlock>
+                                                <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Foreground="#FF393E46">Дата: 15.04.2022</TextBlock>
+                                            </Grid>
+                                        </Border>
+                                        <Border Background="#FFC179" Padding="10" Margin="10 5">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                    <ColumnDefinition Width="30"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <TextBlock FontSize="18" Grid.ColumnSpan="2" FontWeight="Bold" Foreground="#FF393E46" Margin="0 0 0 7">Сделать ГПО</TextBlock>
+                                                <TextBlock Grid.Row="1" Grid.ColumnSpan="3" TextWrapping="Wrap" Foreground="#FF393E46" Margin="0 0 0 7">Разработать диаграмму последовательностей, состояний и классов.</TextBlock>
+                                                <TextBlock Grid.Row="2" Foreground="#FF393E46">Story point: 10</TextBlock>
+                                                <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Foreground="#FF393E46">Дата: 15.04.2022</TextBlock>
+                                            </Grid>
+                                        </Border>
+                                    </StackPanel>
+                                    <Border Grid.Row="2" Padding="10" Margin="10 5">
+                                        <TextBlock FontSize="16" FontWeight="Bold" Foreground="#393E46" VerticalAlignment="Center" HorizontalAlignment="Center">Добавить карточку +</TextBlock>
+                                    </Border>
+                                </Grid>
+                            </Border>
+                            <!---->
+                        </StackPanel>
+                        <Border Grid.Column="1" Width="250" Margin="10 0">
+                            <Border.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding CreateColumn}" CommandParameter="{Binding}" />
+                            </Border.InputBindings>
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="40"></RowDefinition>
                                     <RowDefinition></RowDefinition>
                                 </Grid.RowDefinitions>
-                                <TextBlock Foreground="#FF009BCC" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="18" FontWeight="Bold">Backlog</TextBlock>
-                                <StackPanel Grid.Row="1">
-                                    <Border Background="#FF7979" Padding="10" Margin="10 5">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition></ColumnDefinition>
-                                                <ColumnDefinition></ColumnDefinition>
-                                                <ColumnDefinition Width="30"></ColumnDefinition>
-                                            </Grid.ColumnDefinitions>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition></RowDefinition>
-                                                <RowDefinition></RowDefinition>
-                                                <RowDefinition></RowDefinition>
-                                            </Grid.RowDefinitions>
-                                            <TextBlock FontSize="18" Grid.ColumnSpan="2" FontWeight="Bold" Foreground="#FF393E46" Margin="0 0 0 7">Сделать ГПО</TextBlock>
-                                            <TextBlock Grid.Row="1" Grid.ColumnSpan="3" TextWrapping="Wrap" Foreground="#FF393E46" Margin="0 0 0 7">Разработать диаграмму последовательностей, состояний и классов.</TextBlock>
-                                            <TextBlock Grid.Row="2" Foreground="#FF393E46">Story point: 10</TextBlock>
-                                            <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Foreground="#FF393E46">Дата: 15.04.2022</TextBlock>
-                                        </Grid>
-                                    </Border>
-                                    <Border Background="#DCFF79" Padding="10" Margin="10 5">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition></ColumnDefinition>
-                                                <ColumnDefinition></ColumnDefinition>
-                                                <ColumnDefinition Width="30"></ColumnDefinition>
-                                            </Grid.ColumnDefinitions>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition></RowDefinition>
-                                                <RowDefinition></RowDefinition>
-                                                <RowDefinition></RowDefinition>
-                                            </Grid.RowDefinitions>
-                                            <TextBlock FontSize="18" Grid.ColumnSpan="2" FontWeight="Bold" Foreground="#FF393E46" Margin="0 0 0 7">Сделать ГПО</TextBlock>
-                                            <TextBlock Grid.Row="1" Grid.ColumnSpan="3" TextWrapping="Wrap" Foreground="#FF393E46" Margin="0 0 0 7">Разработать диаграмму последовательностей, состояний и классов.</TextBlock>
-                                            <TextBlock Grid.Row="2" Foreground="#FF393E46">Story point: 10</TextBlock>
-                                            <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Foreground="#FF393E46">Дата: 15.04.2022</TextBlock>
-                                        </Grid>
-                                    </Border>
-                                    <Border Background="#79FFAF" Padding="10" Margin="10 5">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition></ColumnDefinition>
-                                                <ColumnDefinition></ColumnDefinition>
-                                                <ColumnDefinition Width="30"></ColumnDefinition>
-                                            </Grid.ColumnDefinitions>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition></RowDefinition>
-                                                <RowDefinition></RowDefinition>
-                                                <RowDefinition></RowDefinition>
-                                            </Grid.RowDefinitions>
-                                            <TextBlock FontSize="18" Grid.ColumnSpan="2" FontWeight="Bold" Foreground="#FF393E46" Margin="0 0 0 7">Сделать ГПО</TextBlock>
-                                            <TextBlock Grid.Row="1" Grid.ColumnSpan="3" TextWrapping="Wrap" Foreground="#FF393E46" Margin="0 0 0 7">Разработать диаграмму последовательностей, состояний и классов.</TextBlock>
-                                            <TextBlock Grid.Row="2" Foreground="#FF393E46">Story point: 10</TextBlock>
-                                            <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Foreground="#FF393E46">Дата: 15.04.2022</TextBlock>
-                                        </Grid>
-                                    </Border>
-                                    <Border Background="#79E7FF" Padding="10" Margin="10 5">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition></ColumnDefinition>
-                                                <ColumnDefinition></ColumnDefinition>
-                                                <ColumnDefinition Width="30"></ColumnDefinition>
-                                            </Grid.ColumnDefinitions>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition></RowDefinition>
-                                                <RowDefinition></RowDefinition>
-                                                <RowDefinition></RowDefinition>
-                                            </Grid.RowDefinitions>
-                                            <TextBlock FontSize="18" Grid.ColumnSpan="2" FontWeight="Bold" Foreground="#FF393E46" Margin="0 0 0 7">Сделать ГПО</TextBlock>
-                                            <TextBlock Grid.Row="1" Grid.ColumnSpan="3" TextWrapping="Wrap" Foreground="#FF393E46" Margin="0 0 0 7">Разработать диаграмму последовательностей, состояний и классов.</TextBlock>
-                                            <TextBlock Grid.Row="2" Foreground="#FF393E46">Story point: 10</TextBlock>
-                                            <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Foreground="#FF393E46">Дата: 15.04.2022</TextBlock>
-                                        </Grid>
-                                    </Border>
-                                    <Border Padding="10" Margin="10 5">
-                                        <Grid>
-                                            <TextBlock FontSize="16" Grid.ColumnSpan="2" FontWeight="Bold" Foreground="#393E46" VerticalAlignment="Center" HorizontalAlignment="Center">Добавить карточку +</TextBlock>
-                                        </Grid>
-                                    </Border>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-                        <Border Width="250" Margin="10 0">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="40"></RowDefinition>
-                                    <RowDefinition></RowDefinition>
-                                </Grid.RowDefinitions>
-                                <TextBlock Foreground="#FF009BCC" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="18" FontWeight="Bold">To Do</TextBlock>
-                                <StackPanel Grid.Row="1">
-                                    <Border Background="#799FFF" Padding="10" Margin="10 5">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition></ColumnDefinition>
-                                                <ColumnDefinition></ColumnDefinition>
-                                                <ColumnDefinition Width="30"></ColumnDefinition>
-                                            </Grid.ColumnDefinitions>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition></RowDefinition>
-                                                <RowDefinition></RowDefinition>
-                                                <RowDefinition></RowDefinition>
-                                            </Grid.RowDefinitions>
-                                            <TextBlock FontSize="18" Grid.ColumnSpan="2" FontWeight="Bold" Foreground="#FF393E46" Margin="0 0 0 7">Сделать ГПО</TextBlock>
-                                            <TextBlock Grid.Row="1" Grid.ColumnSpan="3" TextWrapping="Wrap" Foreground="#FF393E46" Margin="0 0 0 7">Разработать диаграмму последовательностей, состояний и классов.</TextBlock>
-                                            <TextBlock Grid.Row="2" Foreground="#FF393E46">Story point: 10</TextBlock>
-                                            <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Foreground="#FF393E46">Дата: 15.04.2022</TextBlock>
-                                        </Grid>
-                                    </Border>
-                                    <Border Background="#BC79FF" Padding="10" Margin="10 5">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition></ColumnDefinition>
-                                                <ColumnDefinition></ColumnDefinition>
-                                                <ColumnDefinition Width="30"></ColumnDefinition>
-                                            </Grid.ColumnDefinitions>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition></RowDefinition>
-                                                <RowDefinition></RowDefinition>
-                                                <RowDefinition></RowDefinition>
-                                            </Grid.RowDefinitions>
-                                            <TextBlock FontSize="18" Grid.ColumnSpan="2" FontWeight="Bold" Foreground="#FF393E46" Margin="0 0 0 7">Сделать ГПО</TextBlock>
-                                            <TextBlock Grid.Row="1" Grid.ColumnSpan="3" TextWrapping="Wrap" Foreground="#FF393E46" Margin="0 0 0 7">Разработать диаграмму последовательностей, состояний и классов.</TextBlock>
-                                            <TextBlock Grid.Row="2" Foreground="#FF393E46">Story point: 10</TextBlock>
-                                            <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Foreground="#FF393E46">Дата: 15.04.2022</TextBlock>
-                                        </Grid>
-                                    </Border>
-                                    <Border Padding="10" Margin="10 5">
-                                        <Grid>
-                                            <TextBlock FontSize="16" Grid.ColumnSpan="2" FontWeight="Bold" Foreground="#393E46" VerticalAlignment="Center" HorizontalAlignment="Center">Добавить карточку +</TextBlock>
-                                        </Grid>
-                                    </Border>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-                        <Border Width="250" Margin="10 0">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="40"></RowDefinition>
-                                    <RowDefinition></RowDefinition>
-                                </Grid.RowDefinitions>
-                                <TextBlock Foreground="#FF009BCC" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="18" FontWeight="Bold">In Process</TextBlock>
-                                <StackPanel Grid.Row="1">
-                                    <Border Background="#EC79FF" Padding="10" Margin="10 5">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition></ColumnDefinition>
-                                                <ColumnDefinition></ColumnDefinition>
-                                                <ColumnDefinition Width="30"></ColumnDefinition>
-                                            </Grid.ColumnDefinitions>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition></RowDefinition>
-                                                <RowDefinition></RowDefinition>
-                                                <RowDefinition></RowDefinition>
-                                            </Grid.RowDefinitions>
-                                            <TextBlock FontSize="18" Grid.ColumnSpan="2" FontWeight="Bold" Foreground="#FF393E46" Margin="0 0 0 7">Сделать ГПО</TextBlock>
-                                            <TextBlock Grid.Row="1" Grid.ColumnSpan="3" TextWrapping="Wrap" Foreground="#FF393E46" Margin="0 0 0 7">Разработать диаграмму последовательностей, состояний и классов.</TextBlock>
-                                            <TextBlock Grid.Row="2" Foreground="#FF393E46">Story point: 10</TextBlock>
-                                            <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Foreground="#FF393E46">Дата: 15.04.2022</TextBlock>
-                                        </Grid>
-                                    </Border>
-                                    <Border Background="#FF7979" Padding="10" Margin="10 5">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition></ColumnDefinition>
-                                                <ColumnDefinition></ColumnDefinition>
-                                                <ColumnDefinition Width="30"></ColumnDefinition>
-                                            </Grid.ColumnDefinitions>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition></RowDefinition>
-                                                <RowDefinition></RowDefinition>
-                                                <RowDefinition></RowDefinition>
-                                            </Grid.RowDefinitions>
-                                            <TextBlock FontSize="18" Grid.ColumnSpan="2" FontWeight="Bold" Foreground="#FF393E46" Margin="0 0 0 7">Сделать ГПО</TextBlock>
-                                            <TextBlock Grid.Row="1" Grid.ColumnSpan="3" TextWrapping="Wrap" Foreground="#FF393E46" Margin="0 0 0 7">Разработать диаграмму последовательностей, состояний и классов.</TextBlock>
-                                            <TextBlock Grid.Row="2" Foreground="#FF393E46">Story point: 10</TextBlock>
-                                            <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Foreground="#FF393E46">Дата: 15.04.2022</TextBlock>
-                                        </Grid>
-                                    </Border>
-                                    <Border Background="#FFC179" Padding="10" Margin="10 5">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition></ColumnDefinition>
-                                                <ColumnDefinition></ColumnDefinition>
-                                                <ColumnDefinition Width="30"></ColumnDefinition>
-                                            </Grid.ColumnDefinitions>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition></RowDefinition>
-                                                <RowDefinition></RowDefinition>
-                                                <RowDefinition></RowDefinition>
-                                            </Grid.RowDefinitions>
-                                            <TextBlock FontSize="18" Grid.ColumnSpan="2" FontWeight="Bold" Foreground="#FF393E46" Margin="0 0 0 7">Сделать ГПО</TextBlock>
-                                            <TextBlock Grid.Row="1" Grid.ColumnSpan="3" TextWrapping="Wrap" Foreground="#FF393E46" Margin="0 0 0 7">Разработать диаграмму последовательностей, состояний и классов.</TextBlock>
-                                            <TextBlock Grid.Row="2" Foreground="#FF393E46">Story point: 10</TextBlock>
-                                            <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Foreground="#FF393E46">Дата: 15.04.2022</TextBlock>
-                                        </Grid>
-                                    </Border>
-                                    <Border Padding="10" Margin="10 5">
-                                        <Grid>
-                                            <TextBlock FontSize="16" Grid.ColumnSpan="2" FontWeight="Bold" Foreground="#393E46" VerticalAlignment="Center" HorizontalAlignment="Center">Добавить карточку +</TextBlock>
-                                        </Grid>
-                                    </Border>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-                        <Border Width="250" Margin="10 0">
-                            <Grid>
-                                <Border Margin="5 45 5 0" Padding="10" VerticalAlignment="Top" Background="#FF009BCC">
+                                <Border Padding="10" VerticalAlignment="Top" Background="#FF009BCC">
                                     <TextBlock FontSize="16" Grid.ColumnSpan="2" FontWeight="Bold" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center">Добавить колонку +</TextBlock>
                                 </Border>
                             </Grid>
                         </Border>
-                    </StackPanel>
+                    </Grid>
                 </ScrollViewer>
             </Border>
         </Grid>
+        <Grid x:Name="PlaceToPupup"></Grid>
     </Grid>
 </UserControl>

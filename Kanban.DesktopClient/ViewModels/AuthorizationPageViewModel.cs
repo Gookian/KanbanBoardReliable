@@ -1,4 +1,7 @@
-﻿using Prism.Commands;
+﻿using Core;
+using Kanban.DesktopClient.RestAPI;
+using Kanban.DesktopClient.Views;
+using Prism.Commands;
 
 namespace Kanban.DesktopClient.ViewModels
 {
@@ -18,9 +21,26 @@ namespace Kanban.DesktopClient.ViewModels
             SignUp = new DelegateCommand(SignUp_Click);
         }
 
-        private void SignIn_Click()
+        private async void SignIn_Click()
         {
-            BindingContext.MainFrame.Child = BindingContext.HomePage;
+            var user = new User
+            {
+                Id = new System.Guid(),
+                Name = Login,
+                Password = Password
+            };
+
+            var response = await ServerAPI.GetAuthentication(user);
+
+            if (response.Code == 200)
+            {
+                BindingContext.MainFrame.Child = BindingContext.HomePage;
+            }
+            else if (response.Code == 500)
+            {
+                ErrorWindow window = new ErrorWindow($"Пользователь не найден: {response.Code}", $"Пользователь не существует, проверьте вверенные данные!");
+                window.Show();
+            }
         }
 
         private void SignUp_Click()
