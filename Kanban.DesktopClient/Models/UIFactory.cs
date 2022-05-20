@@ -7,6 +7,7 @@ using System;
 using Prism.Commands;
 using System.Windows.Media.Effects;
 using Kanban.DesktopClient.RestAPI;
+using System.Collections.Generic;
 
 namespace Kanban.DesktopClient.Models
 {
@@ -16,6 +17,37 @@ namespace Kanban.DesktopClient.Models
         {
             Context.IdTargetBoard = board.Id;
             BindingContext.MainFrame.Child = BindingContext.KanbanPage;
+        }
+
+        static async void OnDeleteCard_Click(Card cardDelete)
+        {
+            await ServerAPI.DeleteCard(cardDelete);
+
+            Response response = await ServerAPI.GetBoardNameById(Context.IdTargetBoard);
+
+            response = await ServerAPI.GetColumnsByBoardId(Context.IdTargetBoard);
+
+            List<Column> columns = ServerAPI.ConvertTo<List<Column>>(response.Body);
+
+            BindingContext.SpaceForColumn.Children.Clear();
+            StackPanelRepository.Clear();
+
+            foreach (var column in columns)
+            {
+
+                BindingContext.SpaceForColumn.Children.Add(UIFactory.CreateColumn(column));
+
+                response = await ServerAPI.GetCardsByColumnId(column.Id);
+
+                List<Card> cards = ServerAPI.ConvertTo<List<Card>>(response.Body);
+
+                StackPanel stackPanel = StackPanelRepository.GetById(column.Id);
+
+                foreach (var card in cards)
+                {
+                    stackPanel.Children.Add(UIFactory.CreateCard(card));
+                }
+            }
         }
 
         static async void AddBoard_Click(TextBox text)
@@ -34,7 +66,7 @@ namespace Kanban.DesktopClient.Models
                 BindingContext.PlaceToPupup.Children.Clear();
             }
         }
-
+        
         static async void AddColumn_Click(TextBox text)
         {
             Column column = new Column()
@@ -175,6 +207,21 @@ namespace Kanban.DesktopClient.Models
 
         public static Border CreateCard(Card card)
         {
+            DelegateCommand<Card> OnDeleteCard = new DelegateCommand<Card>(OnDeleteCard_Click);
+
+            MouseBinding mouseBindingDelete = new MouseBinding();
+            mouseBindingDelete.Command = OnDeleteCard;
+            mouseBindingDelete.MouseAction = MouseAction.LeftClick;
+            mouseBindingDelete.CommandParameter = card;
+
+            /*Border border = new Border();
+            border.Width = 200;
+            border.Height = 120;
+            border.Margin = new Thickness(10);
+            border.Background = new SolidColorBrush(Color.FromRgb(0, 194, 255));
+            border.InputBindings.Add(mouseBinding);
+            border.Child = textBlock;*/
+
             Border border2 = new Border()
             {
                 Width = 5,
@@ -225,6 +272,7 @@ namespace Kanban.DesktopClient.Models
             Grid gridDelete = new Grid();
             gridDelete.Children.Add(boardLine1);
             gridDelete.Children.Add(boardLine2);
+            gridDelete.InputBindings.Add(mouseBindingDelete);
 
             TextBlock textBlockTitle = new TextBlock()
             {
