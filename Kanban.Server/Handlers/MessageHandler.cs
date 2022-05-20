@@ -32,9 +32,7 @@ namespace Kanban.Server.Handlers
                 Body = token
             };
 
-            var responseJson = JsonConvert.SerializeObject(response);
-
-            await SendMessage(token, responseJson);
+            await SendMessageToAll(response);
         }
 
         public override async Task OnDisconnected(WebSocket socket)
@@ -78,6 +76,11 @@ namespace Kanban.Server.Handlers
                 else if (request.Header == "BoardNameById")
                     BoardNameById(request, socket);
             }
+            else if (request?.Method == "DELETE")
+            {
+                if (request.Header == "Card")
+                    DeleteCardById(request, socket);
+            }
 
             startTime.Stop();
 
@@ -116,9 +119,7 @@ namespace Kanban.Server.Handlers
 
             ConsoleLogger.Log(new Debug(), $"Code: {code}");
 
-            var responseJson = JsonConvert.SerializeObject(response);
-
-            await SendMessage(token, responseJson);
+            await SendMessage(token, response);
         }
 
         private async void GetBoards(Request request, WebSocket socket)
@@ -153,9 +154,7 @@ namespace Kanban.Server.Handlers
 
             ConsoleLogger.Log(new Debug(), $"Code: {code}");
 
-            var responseJson = JsonConvert.SerializeObject(response);
-
-            await SendMessage(token, responseJson);
+            await SendMessage(token, response);
         }
 
         private async void BoardNameById(Request request, WebSocket socket)
@@ -203,9 +202,7 @@ namespace Kanban.Server.Handlers
 
             ConsoleLogger.Log(new Debug(), $"Code: {code}");
 
-            var responseJson = JsonConvert.SerializeObject(response);
-
-            await SendMessage(token, responseJson);
+            await SendMessage(token, response);
         }
 
         private async void GetColumnsByBoard(Request request, WebSocket socket)
@@ -253,9 +250,7 @@ namespace Kanban.Server.Handlers
 
             ConsoleLogger.Log(new Debug(), $"Code: {code}");
 
-            var responseJson = JsonConvert.SerializeObject(response);
-
-            await SendMessage(token, responseJson);
+            await SendMessage(token, response);
         }
 
         private async void GetCardsByColumn(Request request, WebSocket socket)
@@ -303,9 +298,7 @@ namespace Kanban.Server.Handlers
 
             ConsoleLogger.Log(new Debug(), $"Code: {code}");
 
-            var responseJson = JsonConvert.SerializeObject(response);
-
-            await SendMessage(token, responseJson);
+            await SendMessage(token, response);
         }
 
         private async void PostUser(Request request, WebSocket socket)
@@ -360,9 +353,7 @@ namespace Kanban.Server.Handlers
 
             ConsoleLogger.Log(new Debug(), $"Code: {code}");
 
-            var responseJson = JsonConvert.SerializeObject(response);
-
-            await SendMessage(token, responseJson);
+            await SendMessage(token, response);
         }
 
         private async void PostBoard(Request request, WebSocket socket)
@@ -409,9 +400,7 @@ namespace Kanban.Server.Handlers
 
             ConsoleLogger.Log(new Debug(), $"Code: {code}");
 
-            var responseJson = JsonConvert.SerializeObject(response);
-
-            await SendMessage(token, responseJson);
+            await SendMessage(token, response);
         }
 
         private async void PostColumn(Request request, WebSocket socket)
@@ -458,13 +447,7 @@ namespace Kanban.Server.Handlers
 
             ConsoleLogger.Log(new Debug(), $"Code: {code}");
 
-            var responseJson = JsonConvert.SerializeObject(response, Formatting.None,
-                    new JsonSerializerSettings()
-                    {
-                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                    });
-
-            await SendMessage(token, responseJson);
+            await SendMessage(token, response);
         }
 
         private async void PostCard(Request request, WebSocket socket)
@@ -511,13 +494,7 @@ namespace Kanban.Server.Handlers
 
             ConsoleLogger.Log(new Debug(), $"Code: {code}");
 
-            var responseJson = JsonConvert.SerializeObject(response, Formatting.None,
-                    new JsonSerializerSettings()
-                    {
-                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                    });
-
-            await SendMessage(token, responseJson);
+            await SendMessage(token, response);
         }
 
         // Илья
@@ -548,9 +525,7 @@ namespace Kanban.Server.Handlers
                 Body = body
             };
 
-            var responseJson = JsonConvert.SerializeObject(response);
-
-            await SendMessageToAll(responseJson);
+            await SendMessageToAll(response);
         }
 
         // Илья
@@ -580,9 +555,7 @@ namespace Kanban.Server.Handlers
                 Body = body
             };
 
-            var responseJson = JsonConvert.SerializeObject(response);
-
-            await SendMessageToAll(responseJson);
+            await SendMessageToAll(response);
         }
 
         // Илья
@@ -612,42 +585,47 @@ namespace Kanban.Server.Handlers
                 Body = body
             };
 
-            var responseJson = JsonConvert.SerializeObject(response);
-
-            await SendMessageToAll(responseJson);
+            await SendMessageToAll(response);
         }
 
         // Илья
         private async void DeleteCardById(Request request, WebSocket socket)
         {
-            int code = 200;
-            string header = request.Header;
-            object body = "";
+            Response response = new Response()
+            {
+                Code = 200,
+                Header = request.Header,
+                Body = ""
+            };
 
             Card card = new Card();
 
             try
             {
                 card = ConvertTo<Card>(request.Body);
-                DatabaseRepository.DeleteCardById(card.Id);
-                body = card;
             }
             catch
             {
-                code = 500;
-                header = "Error";
+                response.Code = 501;
+                response.Header = "Error";
+                response.Body = "Не верный формат тела запроса";
+                ConsoleLogger.Log(new Error(), $"Invalid request body format, code: {response.Code}");
             }
 
-            Response response = new Response
+            try
             {
-                Code = code,
-                Header = header,
-                Body = body
-            };
+                DatabaseRepository.DeleteCardById(card.Id);
+                response.Body = card;
+            }
+            catch
+            {
+                response.Code = 502;
+                response.Header = "Error";
+                response.Body = "Ошибка добавления в базу данных";
+                ConsoleLogger.Log(new Error(), $"Error adding to the database, code: {response.Code}");
+            }
 
-            var responseJson = JsonConvert.SerializeObject(response);
-
-            await SendMessageToAll(responseJson);
+            await SendMessageToAll(response);
         }
 
         // Илья
@@ -678,9 +656,7 @@ namespace Kanban.Server.Handlers
                 Body = body
             };
 
-            var responseJson = JsonConvert.SerializeObject(response);
-
-            await SendMessageToAll(responseJson);
+            await SendMessageToAll(response);
         }
 
         // Илья
@@ -711,9 +687,7 @@ namespace Kanban.Server.Handlers
                 Body = body
             };
 
-            var responseJson = JsonConvert.SerializeObject(response);
-
-            await SendMessageToAll(responseJson);
+            await SendMessageToAll(response);
         }
     }
 }

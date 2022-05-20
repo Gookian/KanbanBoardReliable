@@ -117,6 +117,18 @@ namespace Kanban.DesktopClient.RestAPI
             return await MessageService.Send(request);
         }
 
+        public static async Task<Response> DeleteCard(Card card)
+        {
+            Request request = new Request()
+            {
+                Method = "DELETE",
+                Header = "Card",
+                Body = card
+            };
+
+            return await MessageService.Send(request);
+        }
+
         public static T ConvertTo<T>(object obj)
         {
             return JsonConvert.DeserializeObject<T>(obj.ToString());
