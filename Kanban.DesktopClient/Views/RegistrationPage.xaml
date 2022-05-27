@@ -9,7 +9,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Border Background="#EEE">
+        <Border>
+            <Border.Background>
+                <ImageBrush Stretch="Fill" TileMode="Tile" ImageSource="/Resources/1631659530_23-phonoteka-org-p-fon-s-malenkimi-znachkami-krasivo-23.jpg"/>
+            </Border.Background>
             <Border Background="#393E46" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="20 10 20 20">
                 <Grid>
                     <Grid.ColumnDefinitions>

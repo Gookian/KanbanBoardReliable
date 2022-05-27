@@ -7,7 +7,7 @@
         xmlns:prism="http://prismlibrary.com/"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         prism:ViewModelLocator.AutoWireViewModel="True"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Kanban планер" Height="450" Width="800">
     <Grid>
         <Border x:Name="MainFrame" Loaded="MainFrame_Loaded">
             

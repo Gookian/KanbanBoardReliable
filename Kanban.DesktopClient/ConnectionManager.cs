@@ -5,7 +5,8 @@ namespace Kanban.DesktopClient
     using System;
     using System.Net.WebSockets;
     using System.Threading;
-    using System.Threading.Tasks;
+    using System.Windows;
+    using System.Windows.Threading;
     using Kanban.DesktopClient.RestAPI;
 
     public class ConnectionManager

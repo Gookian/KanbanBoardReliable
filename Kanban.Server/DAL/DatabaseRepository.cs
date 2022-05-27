@@ -169,7 +169,7 @@ namespace Kanban.Server.DAL
                 card.Description = newCard.Description;
                 card.StoryPoint = newCard.StoryPoint;
                 card.Date = newCard.Date;
-
+                card.Color = newCard.Color;
 
                 db.Cards.Update(card);
                 db.SaveChanges();
