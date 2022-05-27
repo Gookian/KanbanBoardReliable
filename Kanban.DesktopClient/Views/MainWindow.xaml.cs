@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using Core;
+using Kanban.DesktopClient.RestAPI;
+using System.Threading;
+using System.Windows;
 
 namespace Kanban.DesktopClient.Views
 {

@@ -117,6 +117,42 @@ namespace Kanban.DesktopClient.RestAPI
             return await MessageService.Send(request);
         }
 
+        public static async Task<Response> EditCard(Card card)
+        {
+            Request request = new Request()
+            {
+                Method = "PUT",
+                Header = "Card",
+                Body = card
+            };
+
+            return await MessageService.Send(request);
+        }
+
+        public static async Task<Response> EditColumn(Column column)
+        {
+            Request request = new Request()
+            {
+                Method = "PUT",
+                Header = "Column",
+                Body = column
+            };
+
+            return await MessageService.Send(request);
+        }
+
+        public static async Task<Response> EditBoard(Board board)
+        {
+            Request request = new Request()
+            {
+                Method = "PUT",
+                Header = "Board",
+                Body = board
+            };
+
+            return await MessageService.Send(request);
+        }
+
         public static async Task<Response> DeleteCard(Card card)
         {
             Request request = new Request()
@@ -124,6 +160,30 @@ namespace Kanban.DesktopClient.RestAPI
                 Method = "DELETE",
                 Header = "Card",
                 Body = card
+            };
+
+            return await MessageService.Send(request);
+        }
+
+        public static async Task<Response> DeleteColumn(Column column)
+        {
+            Request request = new Request()
+            {
+                Method = "DELETE",
+                Header = "Column",
+                Body = column
+            };
+
+            return await MessageService.Send(request);
+        }
+
+        public static async Task<Response> DeleteBoard(Board board)
+        {
+            Request request = new Request()
+            {
+                Method = "DELETE",
+                Header = "Board",
+                Body = board
             };
 
             return await MessageService.Send(request);

@@ -50,6 +50,8 @@ namespace Kanban.DesktopClient.Views
                     stackPanel.Children.Add(UIFactory.CreateCard(card));
                 }
             }
+
+            Context.targetPage = new KanbanPage();
         }
     }
 }

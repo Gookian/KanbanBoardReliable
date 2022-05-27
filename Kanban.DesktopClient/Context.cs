@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace Kanban.DesktopClient
@@ -7,6 +8,8 @@ namespace Kanban.DesktopClient
     public class Context
     {
         public static ConnectionManager connectionManager { get; set; }
+
+        public static UserControl targetPage { get; set; }
 
         public static Guid IdTargetBoard { get; set; }
 
