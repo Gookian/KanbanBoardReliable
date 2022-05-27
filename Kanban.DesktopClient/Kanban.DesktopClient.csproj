@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\1614585474_6-p-belii-fon-pikseli-7.jpg" />
+    <None Remove="Resources\1631659530_23-phonoteka-org-p-fon-s-malenkimi-znachkami-krasivo-23.jpg" />
+    <None Remove="Resources\AvatarNull.jpg" />
+    <None Remove="Resources\b2fd8fe8af53e7f269d11269b3b61846.jpg" />
+    <None Remove="Resources\background1.jpg" />
     <None Remove="Views\AvatarNull.jpg" />
     <None Remove="Views\background1.jpg" />
   </ItemGroup>
@@ -16,6 +21,7 @@
     <PackageReference Include="MaterialDesignThemes" Version="4.4.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.4" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="NLog" Version="5.0.0" />
     <PackageReference Include="Prism.Unity" Version="8.1.97" />
   </ItemGroup>
 
@@ -24,6 +30,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\1614585474_6-p-belii-fon-pikseli-7.jpg" />
+    <Resource Include="Resources\1631659530_23-phonoteka-org-p-fon-s-malenkimi-znachkami-krasivo-23.jpg" />
+    <Resource Include="Resources\AvatarNull.jpg" />
+    <Resource Include="Resources\b2fd8fe8af53e7f269d11269b3b61846.jpg" />
+    <Resource Include="Resources\background1.jpg" />
     <Resource Include="Views\AvatarNull.jpg" />
     <Resource Include="Views\background1.jpg" />
   </ItemGroup>

@@ -76,10 +76,23 @@ namespace Kanban.Server.Handlers
                 else if (request.Header == "BoardNameById")
                     BoardNameById(request, socket);
             }
+            else if (request?.Method == "PUT")
+            {
+                if (request.Header == "Card")
+                    EditCard(request, socket);
+                else if (request.Header == "Column")
+                    EditColumnById(request, socket);
+                else if (request.Header == "Board")
+                    EditBoardById(request, socket);
+            }
             else if (request?.Method == "DELETE")
             {
                 if (request.Header == "Card")
                     DeleteCardById(request, socket);
+                else if (request.Header == "Column")
+                    DeleteColumnById(request, socket);
+                else if (request.Header == "Board")
+                    DeleteBoardById(request, socket);
             }
 
             startTime.Stop();
@@ -497,18 +510,16 @@ namespace Kanban.Server.Handlers
             await SendMessage(token, response);
         }
 
-        // Илья
-        private async void EditCardById(Request request, WebSocket socket)
+        // Илья норм
+        private async void EditCard(Request request, WebSocket socket)
         {
             int code = 200;
             string header = request.Header;
             object body = "";
 
-            Card card = new Card();
-
             try
-            { 
-                card = ConvertTo<Card>(request.Body);
+            {
+                Card card = ConvertTo<Card>(request.Body);
                 DatabaseRepository.EditCard(card);
                 body = card;
             }
@@ -525,21 +536,22 @@ namespace Kanban.Server.Handlers
                 Body = body
             };
 
+            ConsoleLogger.Log(new Debug(), $"Code: {code}");
+
             await SendMessageToAll(response);
         }
 
-        // Илья
+        // Илья норм
         private async void EditColumnById(Request request, WebSocket socket)
         {
             int code = 200;
             string header = request.Header;
             object body = "";
 
-            Column column = new Column();
-
             try
             {
-                column = ConvertTo<Column>(request.Body);
+                Column column = ConvertTo<Column>(request.Body);
+                DatabaseRepository.EditNameToColumn(column.Id, column.Name);
                 body = column;
             }
             catch
@@ -555,21 +567,22 @@ namespace Kanban.Server.Handlers
                 Body = body
             };
 
+            ConsoleLogger.Log(new Debug(), $"Code: {code}");
+
             await SendMessageToAll(response);
         }
 
-        // Илья
+        // Илья норм
         private async void EditBoardById(Request request, WebSocket socket)
         {
             int code = 200;
             string header = request.Header;
             object body = "";
 
-            Board board = new Board();
-
             try
             {
-                board = ConvertTo<Board>(request.Body);
+                Board board = ConvertTo<Board>(request.Body);
+                DatabaseRepository.EditNameToBoard(board.Id, board.Name);
                 body = board;
             }
             catch
@@ -585,10 +598,12 @@ namespace Kanban.Server.Handlers
                 Body = body
             };
 
+            ConsoleLogger.Log(new Debug(), $"Code: {code}");
+
             await SendMessageToAll(response);
         }
 
-        // Илья
+        // Илья норм
         private async void DeleteCardById(Request request, WebSocket socket)
         {
             Response response = new Response()
@@ -625,67 +640,90 @@ namespace Kanban.Server.Handlers
                 ConsoleLogger.Log(new Error(), $"Error adding to the database, code: {response.Code}");
             }
 
+            ConsoleLogger.Log(new Debug(), $"Code: {response.Code}");
+
             await SendMessageToAll(response);
         }
 
-        // Илья
+        // Илья норм
         private async void DeleteColumnById(Request request, WebSocket socket)
         {
-            int code = 200;
-            string header = request.Header;
-            object body = "";
+            Response response = new Response()
+            {
+                Code = 200,
+                Header = request.Header,
+                Body = ""
+            };
 
             Column column = new Column();
 
             try
             {
                 column = ConvertTo<Column>(request.Body);
-                DatabaseRepository.DeleteColumnById(column.Id);
-                body = column;
             }
             catch
             {
-                code = 500;
-                header = "Error";
+                response.Code = 501;
+                response.Header = "Error";
+                response.Body = "Не верный формат тела запроса";
+                ConsoleLogger.Log(new Error(), $"Invalid request body format, code: {response.Code}");
             }
 
-            Response response = new Response
+            try
             {
-                Code = code,
-                Header = header,
-                Body = body
-            };
+                DatabaseRepository.DeleteColumnById(column.Id);
+                response.Body = column;
+            }
+            catch
+            {
+                response.Code = 502;
+                response.Header = "Error";
+                response.Body = "Ошибка добавления в базу данных";
+                ConsoleLogger.Log(new Error(), $"Error adding to the database, code: {response.Code}");
+            }
+
+            ConsoleLogger.Log(new Debug(), $"Code: {response.Code}");
 
             await SendMessageToAll(response);
         }
 
-        // Илья
+        // Илья норм
         private async void DeleteBoardById(Request request, WebSocket socket)
         {
-            int code = 200;
-            string header = request.Header;
-            object body = "";
+            Response response = new Response()
+            {
+                Code = 200,
+                Header = request.Header,
+                Body = ""
+            };
 
             Board board = new Board();
 
             try
             {
                 board = ConvertTo<Board>(request.Body);
-                DatabaseRepository.DeleteBoardById(board.Id);
-                body = board;
             }
             catch
             {
-                code = 500;
-                header = "Error";
+                response.Code = 501;
+                response.Header = "Error";
+                response.Body = "Не верный формат тела запроса";
+                ConsoleLogger.Log(new Error(), $"Invalid request body format, code: {response.Code}");
             }
 
-            Response response = new Response
+            try
             {
-                Code = code,
-                Header = header,
-                Body = body
-            };
+                response.Body = DatabaseRepository.DeleteColumnById(board.Id);
+            }
+            catch
+            {
+                response.Code = 502;
+                response.Header = "Error";
+                response.Body = "Ошибка добавления в базу данных";
+                ConsoleLogger.Log(new Error(), $"Error adding to the database, code: {response.Code}");
+            }
+
+            ConsoleLogger.Log(new Debug(), $"Code: {response.Code}");
 
             await SendMessageToAll(response);
         }

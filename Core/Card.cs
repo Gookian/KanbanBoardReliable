@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace Core
 {
@@ -13,6 +14,8 @@ namespace Core
         public int StoryPoint { get; set; }
 
         public DateTime Date { get; set; }
+
+        public string Color { get; set; }
 
         public Guid ColumnId { get; set; }
 

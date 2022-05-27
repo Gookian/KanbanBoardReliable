@@ -1,4 +1,5 @@
-﻿using Kanban.DesktopClient.Models;
+﻿using Core;
+using Kanban.DesktopClient.Models;
 using Prism.Commands;
 
 namespace Kanban.DesktopClient.ViewModels
@@ -23,7 +24,7 @@ namespace Kanban.DesktopClient.ViewModels
         private async void CreateBoard_Click()
         {
             if (BindingContext.PlaceToPupup.Children.Count < 1)
-                BindingContext.PlaceToPupup.Children.Add(UIFactory.CreatePupupAddBoard());
+                BindingContext.PlaceToPupup.Children.Add(UIFactory.CreatePupupBoard(new Board(),"Add"));
         }
     }
 }

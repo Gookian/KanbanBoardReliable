@@ -8,63 +8,25 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              Loaded="UserControl_Loaded">
-    <Grid Background="#EEE">
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
-            <StackPanel>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="220"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="40"></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <TextBlock Margin="10,10,10,10" FontSize="16" FontWeight="Bold" Foreground="#FF5E5E5E" Grid.ColumnSpan="2">Личное пространство</TextBlock>
-                    <Border Grid.Row="1" Grid.Column="1" Background="#00C2FF" Width="200" Height="120" Margin="10">
-                        <Border.InputBindings>
-                            <MouseBinding MouseAction="LeftClick" Command="{Binding CreateBoard}" CommandParameter="{Binding}" />
-                        </Border.InputBindings>
-                        <TextBlock Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center">Создать доску +</TextBlock>
-                    </Border>
-                    <StackPanel x:Name="PersonalBoards" Orientation="Horizontal" Grid.Row="1">
-
-                    </StackPanel>
-                </Grid>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="220"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="40"></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <TextBlock Margin="10" FontSize="16" FontWeight="Bold" Foreground="#FF5E5E5E">Работа в команде</TextBlock>
-                    <StackPanel Orientation="Horizontal" Grid.Row="1">
-                        <Border Background="#00C2FF" Width="200" Height="120" Margin="10">
-                            <Border.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding Board}" CommandParameter="{Binding}" />
-                            </Border.InputBindings>
-                            <Grid>
-                                <Border Margin="2">
-                                    <Border.Effect>
-                                        <BlurEffect Radius="5" RenderingBias="Quality"/>
-                                    </Border.Effect>
-                                    <Border.Background>
-                                        <ImageBrush ImageSource="/Views/background1.jpg"/>
-                                    </Border.Background>
-                                </Border>
-                                <TextBlock Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center">Название доски</TextBlock>
-                            </Grid>
-                        </Border>
-                    </StackPanel>
-                    <Border Grid.Row="1" Grid.Column="2" Background="#00C2FF" Width="200" Height="120" Margin="10">
-                        <TextBlock Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center">Создать доску +</TextBlock>
-                    </Border>
-                </Grid>
-            </StackPanel>
+    <Grid>
+        <Grid.Background>
+            <ImageBrush TileMode="Tile" Stretch="UniformToFill" ImageSource="/Resources/1631659530_23-phonoteka-org-p-fon-s-malenkimi-znachkami-krasivo-23.jpg" Opacity="0.5"/>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Margin="10" FontSize="28" FontWeight="Bold" Foreground="#FF5E5E5E">Личное пространство</TextBlock>
+        <ScrollViewer Grid.Row="1">
+            <WrapPanel x:Name="PersonalBoards"></WrapPanel>
         </ScrollViewer>
-        <Grid x:Name="PlaceToPupup"></Grid>
+        <Border Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Right" CornerRadius="15" Background="#00C2FF" Width="200" Height="40" Margin="0 0 10 10">
+            <Border.InputBindings>
+                <MouseBinding MouseAction="LeftClick" Command="{Binding CreateBoard}" CommandParameter="{Binding}" />
+            </Border.InputBindings>
+            <TextBlock Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center">Создать доску +</TextBlock>
+        </Border>
+        <Grid Grid.RowSpan="3" x:Name="PlaceToPupup"></Grid>
     </Grid>
 </UserControl>
