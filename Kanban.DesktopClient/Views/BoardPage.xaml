@@ -7,65 +7,64 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             Loaded="UserControl_Loaded">
     <Grid Background="#EEE">
-        <StackPanel Margin="10">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="40"></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                </Grid.RowDefinitions>
-                <TextBlock Margin="10" FontSize="16" FontWeight="Bold" Foreground="#FF5E5E5E">Личное пространство</TextBlock>
-                <StackPanel Orientation="Horizontal" Grid.Row="1">
-                    <Border Background="#00C2FF" Width="200" Height="120" Margin="10">
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="220"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock Margin="10,10,10,10" FontSize="16" FontWeight="Bold" Foreground="#FF5E5E5E" Grid.ColumnSpan="2">Личное пространство</TextBlock>
+                    <Border Grid.Row="1" Grid.Column="1" Background="#00C2FF" Width="200" Height="120" Margin="10">
                         <Border.InputBindings>
-                            <MouseBinding MouseAction="LeftClick" Command="{Binding Board}" CommandParameter="{Binding}" />
+                            <MouseBinding MouseAction="LeftClick" Command="{Binding CreateBoard}" CommandParameter="{Binding}" />
                         </Border.InputBindings>
-                        <Grid>
-                            <Border Margin="2">
-                                <Border.Background>
-                                    <ImageBrush ImageSource="/Views/background1.jpg"/>
-                                </Border.Background>
-                                <Border.Effect>
-                                    <BlurEffect Radius="5" RenderingBias="Quality"/>
-                                </Border.Effect>
-                            </Border>
-                            <TextBlock Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center">Название доски</TextBlock>
-                        </Grid>
-                    </Border>
-                    <Border x:Name="CreateBoardLocal" Background="#00C2FF" Width="200" Height="120" Margin="10">
                         <TextBlock Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center">Создать доску +</TextBlock>
                     </Border>
-                </StackPanel>
-            </Grid>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="40"></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                </Grid.RowDefinitions>
-                <TextBlock Margin="10" FontSize="16" FontWeight="Bold" Foreground="#FF5E5E5E">Работа в команде</TextBlock>
-                <StackPanel Orientation="Horizontal" Grid.Row="1">
-                    <Border Background="#00C2FF" Width="200" Height="120" Margin="10">
-                        <Border.InputBindings>
-                            <MouseBinding MouseAction="LeftClick" Command="{Binding Board}" CommandParameter="{Binding}" />
-                        </Border.InputBindings>
-                        <Grid>
-                            <Border Margin="2">
-                                <Border.Effect>
-                                    <BlurEffect Radius="5" RenderingBias="Quality"/>
-                                </Border.Effect>
-                                <Border.Background>
-                                    <ImageBrush ImageSource="/Views/background1.jpg"/>
-                                </Border.Background>
-                            </Border>
-                            <TextBlock Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center">Название доски</TextBlock>
-                        </Grid>
-                    </Border>
-                    <Border Background="#00C2FF" Width="200" Height="120" Margin="10">
+                    <StackPanel x:Name="PersonalBoards" Orientation="Horizontal" Grid.Row="1">
+
+                    </StackPanel>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="220"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock Margin="10" FontSize="16" FontWeight="Bold" Foreground="#FF5E5E5E">Работа в команде</TextBlock>
+                    <StackPanel Orientation="Horizontal" Grid.Row="1">
+                        <Border Background="#00C2FF" Width="200" Height="120" Margin="10">
+                            <Border.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding Board}" CommandParameter="{Binding}" />
+                            </Border.InputBindings>
+                            <Grid>
+                                <Border Margin="2">
+                                    <Border.Effect>
+                                        <BlurEffect Radius="5" RenderingBias="Quality"/>
+                                    </Border.Effect>
+                                    <Border.Background>
+                                        <ImageBrush ImageSource="/Views/background1.jpg"/>
+                                    </Border.Background>
+                                </Border>
+                                <TextBlock Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center">Название доски</TextBlock>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                    <Border Grid.Row="1" Grid.Column="2" Background="#00C2FF" Width="200" Height="120" Margin="10">
                         <TextBlock Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center">Создать доску +</TextBlock>
                     </Border>
-                </StackPanel>
-            </Grid>
-        </StackPanel>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
+        <Grid x:Name="PlaceToPupup"></Grid>
     </Grid>
 </UserControl>

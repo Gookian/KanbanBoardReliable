@@ -13,7 +13,11 @@
             <ColumnDefinition Width="200"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
+        <Border Grid.Column="1" x:Name="HomeFrame" Background="#EEE"></Border>
         <Border Background="#00C2FF">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="10" RenderingBias="Quality" Opacity="0.5" ShadowDepth="0"/>
+            </Border.Effect>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="80"></RowDefinition>
@@ -59,8 +63,6 @@
                     </Grid>
                 </Border>
             </Grid>
-        </Border>
-        <Border Grid.Column="1" x:Name="HomeFrame" Background="#EEE">
         </Border>
     </Grid>
 </UserControl>

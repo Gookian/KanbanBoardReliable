@@ -13,5 +13,9 @@ namespace Core
         public int StoryPoint { get; set; }
 
         public DateTime Date { get; set; }
+
+        public Guid ColumnId { get; set; }
+
+        public Column Column { get; set; } = new Column();
     }
 }
