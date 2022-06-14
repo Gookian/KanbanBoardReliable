@@ -54,8 +54,8 @@
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Grid.Column="2" Foreground="#FFF" FontWeight="Bold" FontSize="16" VerticalAlignment="Center">Главная</TextBlock>
                                 </Grid>
-                            </Border>-->
-                            <Button Margin="10 5 10 0" Background="#FF009BCC" BorderBrush="#FF009BCC" Command="{Binding Home}">Главная</Button>
+                            </Border>
+                            <Button Margin="10 5 10 0" Background="#FF009BCC" BorderBrush="#FF009BCC" Command="{Binding Home}" Cursor="Hand">Главная</Button>-->
                             <Button Margin="10 5 10 0" Background="#FF009BCC" BorderBrush="#FF009BCC" Command="{Binding Boards}">Доски</Button>
                             <Button Margin="10 5 10 0" Background="#FF009BCC" BorderBrush="#FF009BCC" Command="{Binding Reference}">Справка</Button>
                             <Button Margin="10 5 10 0" Background="#FF009BCC" BorderBrush="#FF009BCC" Command="{Binding Exit}">Выйти</Button>

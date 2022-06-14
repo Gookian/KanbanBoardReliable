@@ -63,9 +63,39 @@ namespace Kanban.DesktopClient {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Byte[].
         /// </summary>
+        internal static byte[] _1614585474_6_p_belii_fon_pikseli_7 {
+            get {
+                object obj = ResourceManager.GetObject("_1614585474_6_p_belii_fon_pikseli_7", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        internal static byte[] _1631659530_23_phonoteka_org_p_fon_s_malenkimi_znachkami_krasivo_23 {
+            get {
+                object obj = ResourceManager.GetObject("_1631659530_23_phonoteka_org_p_fon_s_malenkimi_znachkami_krasivo_23", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
         internal static byte[] AvatarNull {
             get {
                 object obj = ResourceManager.GetObject("AvatarNull", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        internal static byte[] b2fd8fe8af53e7f269d11269b3b61846 {
+            get {
+                object obj = ResourceManager.GetObject("b2fd8fe8af53e7f269d11269b3b61846", resourceCulture);
                 return ((byte[])(obj));
             }
         }

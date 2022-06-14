@@ -19,6 +19,8 @@ namespace Kanban.DesktopClient.Views
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            PersonalBoards.Width = this.Width;
+
             BindingContext.PersonalBoards = PersonalBoards;
             BindingContext.PlaceToPupup = PlaceToPupup;
 
@@ -31,6 +33,8 @@ namespace Kanban.DesktopClient.Views
             {
                 BindingContext.PersonalBoards.Children.Add(UIFactory.CreateBoard(board));
             }
+
+            Context.targetPage = new BoardPage();
         }
     }
 }

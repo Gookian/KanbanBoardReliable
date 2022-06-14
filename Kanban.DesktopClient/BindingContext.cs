@@ -10,7 +10,7 @@ namespace Kanban.DesktopClient
 
         public static Border HomeFrame { get; set; }
 
-        public static StackPanel PersonalBoards { get; set; }
+        public static WrapPanel PersonalBoards { get; set; }
 
         public static StackPanel SpaceForColumn { get; set; }
 
